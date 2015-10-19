@@ -1,1 +1,2 @@
-# yum update -y
+# Run OS updates
+yum update -y
