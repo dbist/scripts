@@ -10,4 +10,4 @@ echo "disable '$TABLE'" | hbase shell
 echo "drop '$TABLE'" | hbase shell
 hbase org.apache.hadoop.hbase.util.RegionSplitter $TABLE $SPLITALGO -c $NUMREGIONS -f $CF
 sleep 3
-echo "alter '$TABLE', {NAME => 'cf', DATA_BLOCK_ENCODING => 'FAST_DIFF', COMPRESSION => '$COMPRESSION'}" | hbase shell
+echo "alter '$TABLE', {NAME => '$CF', DATA_BLOCK_ENCODING => 'FAST_DIFF', COMPRESSION => '$COMPRESSION'}" | hbase shell
