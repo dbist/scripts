@@ -4,6 +4,7 @@
 yum install install -y java-1.7.0-openjdk-devel.x86_64
 
 echo "" ~/.bashrc
+echo "" ~/.bashrc
 echo "# Set Java" >> ~/.bashrc
 echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))" >> ~/.bashrc
 
