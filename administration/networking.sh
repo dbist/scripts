@@ -6,4 +6,5 @@
 # on DNS infrastructure.
 
 yum install -y nscd
-
+sudo touch /etc/netgroup
+sudo service nscd start
