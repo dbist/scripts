@@ -11,7 +11,7 @@
 `ansible all -m user -a "name=admin" -u vagrant --sudo --ask-pass`
 
 #### use shell command
-`ansible all -m shell -a "echo \\`whoami\\`" -u vagrant --sudo --ask-pass`
+`ansible all -m shell -a "ps aux | grep java" -u vagrant --sudo --ask-pass`
 
 #### reboot a server
 `ansible servername -a "/sbin/reboot" -f 10 -u vagrant --sudo --ask-pass`
