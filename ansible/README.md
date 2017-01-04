@@ -1,17 +1,17 @@
-# install sshpass to use --ask-pass option
+#### install sshpass to use --ask-pass option
 `sudo apt-get install sshpass`
 
-# ping nodes
+#### ping nodes
 `ansible all -m ping --ask-pass`
 
-# install package using apt
+#### install package using apt
 `ansible all -m apt -a "name=ansible state=latest" -u vagrant --sudo --ask-pass`
 
-# add user admin
+#### add user admin
 `ansible all -m user -a "name=admin" -u vagrant --sudo --ask-pass`
 
-# use shell command
+#### use shell command
 `ansible all -m shell -a 'echo `whoami`' -u vagrant --sudo --ask-pass`
 
-# reboot a server
+#### reboot a server
 `ansible servername -a "/sbin/reboot" -f 10 -u vagrant --sudo --ask-pass`
