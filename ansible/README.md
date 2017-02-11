@@ -15,3 +15,12 @@
 
 #### reboot a server
 `ansible servername -a "/sbin/reboot" -f 10 -u vagrant --sudo --ask-pass`
+
+#### ping all nodes with pem file
+`ansible all -m ping --private-key field.pem --ask-pass`
+
+#### install on RHEL latest package
+`ansible nodes -m yum -a "name=ambari-agent state=latest" --private-key field.pem --ask-pass --sudo`
+
+#### copy file with pem file interactively
+`ansible nodes -m copy -a "src=/etc/yum.repos.d/ambari.repo dest=/etc/yum.repos.d/ambari.repo" --private-key field.pem --ask-pass --sudo`
