@@ -1,0 +1,25 @@
+---
+- hosts: all
+  remote_user: centos
+  tasks:
+  - name: copy ambari.repo to all hosts
+    copy:
+      src: /home/centos/ambari.repo
+      dest: /etc/yum.repos.d
+  - name: make sure ambari-agent is latest
+    yum:
+      name: ambari-agent
+      state: latest
+  - name: ensure ambari-agent is running
+    service:
+      name: ambari-agent
+      state: started
+  handlers:
+    - name: restart ambari-agent
+      service:
+        name: ambari-agent
+        state: restarted
+    - name: restart ambari-agent
+      service:
+        name: ambari-agent
+        state: restarted
