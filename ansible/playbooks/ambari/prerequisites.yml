@@ -32,6 +32,9 @@
   - name: add unix user guest
     user:
       name: guest
+  - name: add unix user centos
+    user:
+      name: centos
   handlers:
     - name: restart ntpd
       service:
