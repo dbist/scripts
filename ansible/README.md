@@ -1,3 +1,9 @@
+#### install epel-release
+`sudo yum install -y epel-release`
+
+#### install ansible
+`sudo yum install -y ansible`
+
 #### install sshpass to use --ask-pass option
 `sudo apt-get install sshpass`
 
