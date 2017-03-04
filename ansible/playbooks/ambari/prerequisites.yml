@@ -26,6 +26,12 @@
     service:
       name: nscd
       state: started
+  - name: add unix user admin
+    user:
+      name: admin
+  - name: add unix user guest
+    user:
+      name: guest
   handlers:
     - name: restart ntpd
       service:
