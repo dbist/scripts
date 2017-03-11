@@ -10,7 +10,15 @@
     yum:
       name: ambari-agent
       state: latest
-  - name: ensure ambari-agent is running
+  - name: copy ambari-agent.ini to all hosts
+    copy:
+      src: /etc/ambari-agent/conf/ambari-agent.ini
+      dest: /etc/ambari-agent/conf/
+  - name: ensure ambari-agent is stopped
+    service:
+      name: ambari-agent
+      state: stopped
+  - name: start ambari-agent
     service:
       name: ambari-agent
       state: started
