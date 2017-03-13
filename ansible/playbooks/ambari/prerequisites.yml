@@ -26,6 +26,30 @@
     service:
       name: nscd
       state: started
+  - pam_limits:
+      domain: root
+      limit_type: hard
+      limit_item: nproc
+      value: 64000
+      use_max: yes
+  - pam_limits:
+      domain: root
+      limit_type: hard
+      limit_item: nofile
+      value: 64000
+      use_max: yes
+  - pam_limits:
+      domain: root
+      limit_type: soft
+      limit_item: nproc
+      value: 64000
+      use_max: yes
+  - pam_limits:
+      domain: root
+      limit_type: soft
+      limit_item: nofile
+      value: 64000
+      use_max: yes
   - name: add unix user admin
     user:
       name: admin
