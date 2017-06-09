@@ -18,6 +18,10 @@
     yum:
       name: nscd
       state: latest
+  - name: make sure libselinux-python is latest
+    yum:
+      name: libselinux-python
+      state: latest
   - name: ensure nptd is running
     service:
       name: ntpd
