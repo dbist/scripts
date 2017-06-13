@@ -10,10 +10,12 @@
     yum:
       name: ambari-agent
       state: latest
-  - name: copy ambari-agent.ini to all hosts
-    copy:
-      src: /etc/ambari-agent/conf/ambari-agent.ini
-      dest: /etc/ambari-agent/conf/
+  - name: replace the default ambari-agent template with ambari-server name
+    replace:
+      path: /etc/ambari-agent/conf/ambari-agent.ini
+      regexp: 'localhost'
+      replace: 'aervits-hdp0.field.hortonworks.com'
+      backup: yes
   - name: ensure ambari-agent is stopped
     service:
       name: ambari-agent
