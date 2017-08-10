@@ -1,0 +1,28 @@
+---
+- hosts: all
+  remote_user: centos
+  tasks:
+  - name: add unix user hbase
+    user:
+      name: hbase
+  - name: install latest JDK release 
+    yum:
+      name: java-1.8.0-openjdk-devel.x86_64
+      state: latest
+  - name: download hbase release
+    get_url:
+      url: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
+      dest: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
+  - name: create hbase directory
+    file:
+      path: /opt/hbase
+      state: directory
+      owner: hbase
+      group: hbase
+      mode: 0775
+  - name: extract hbase release
+    unarchive:
+      src: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
+      dest: /opt/hbase
+      remote_src: yes
+      keep_newer: yes
