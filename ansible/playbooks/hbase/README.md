@@ -5,3 +5,4 @@
 3. add hbase-site.xml configuration
 4. make sure it works on OSX
 5. handle -XX:ParallelGCThreads=N message
+6. automate population of hbase-site
