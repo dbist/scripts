@@ -1,7 +1,7 @@
 # http://ask.xmodulo.com/set-java_home-environment-variable-linux.html
 
 # install java
-yum install install -y java-1.8.0-openjdk.x86_64
+yum install -y java-1.8.0-openjdk.x86_64
 
 echo "" ~/.bashrc
 echo "" ~/.bashrc
