@@ -22,7 +22,8 @@
       mode: 0775
   - name: extract hbase release
     unarchive:
-      src: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
+#      src: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
+      src: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
       dest: /opt/hbase
       remote_src: yes
       keep_newer: yes

@@ -1,0 +1,40 @@
+---
+- hosts: all
+  remote_user: vagrant
+  tasks:
+  - name: add unix user hadoop
+    user:
+      name: hadoop
+  - name: install latest JDK release 
+    yum:
+      name: java-1.8.0-openjdk-devel.x86_64
+      state: latest
+  - name: download hadoop release
+    get_url:
+      url: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
+      dest: /tmp/hadoop-2.7.1.tar.gz
+#      url: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-3.0.0-alpha4/hadoop-3.0.0-alpha4.tar.gz
+#      dest: /tmp/hadoop-3.0.0-alpha4.tar.gz
+  - name: create hadoop directory
+    file:
+      path: /opt/hadoop
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0775
+  - name: extract hadoop release
+    unarchive:
+#      src: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-3.0.0-alpha4/hadoop-3.0.0-alpha4.tar.gz
+      src: /tmp/hadoop-2.7.1.tar.gz
+      dest: /opt/hadoop
+      remote_src: yes
+      keep_newer: yes
+  - name: change hadoop directory permissions
+    file:
+#      path: /opt/hadoop/hadoop-3.0.0-alpha4
+      path: /opt/hadoop/hadoop-2.7.1
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0775
+      recurse: yes
