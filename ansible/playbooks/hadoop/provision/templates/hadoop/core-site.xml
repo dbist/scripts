@@ -19,6 +19,6 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://{{ansible_hostname}}:9000</value>
+        <value>hdfs://{{ansible_nodename}}:9000</value>
     </property>
 </configuration>
