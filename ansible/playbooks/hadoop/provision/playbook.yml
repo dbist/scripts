@@ -1,5 +1,9 @@
 ---
 - hosts: all
+  vars:
+    usernames:
+       - vagrant
+       - hadoop
   remote_user: vagrant
   become: true
   tasks:
@@ -10,6 +14,18 @@
   - name: add linux user hadoop
     user:
       name: hadoop
+  - name: edit ssh config to allow hadoop user
+    lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^AllowUsers'
+        line: "AllowUsers {{usernames | join(' ')}}"
+        create: yes
+  - name: edit ssh config to allow PubKeyAuthentication
+    lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^#PubkeyAuthentication.*'
+        line: 'PubkeyAuthentication yes'
+        create: yes
   - name: get JAVA_HOME
     shell: "dirname $(dirname $(readlink -f $(which javac)))"
     register: JAVA_HOME
@@ -72,3 +88,7 @@
       group: hadoop
       mode: 0775
       recurse: yes
+  - name: restart sshd service
+    service:
+      name: sshd
+      state: restarted
