@@ -25,6 +25,12 @@
 #      user: hadoop
 #      state: present
 #      key: "{{ lookup('file', '/home/hadoop/.ssh/id_rsa.pub') }}"
+#  - name: change permissions on hadoop service user authorized_keys
+#    file:
+#      path: /home/hadoop/.ssh/authorized_keys
+#      owner: hadoop
+#      group: hadoop
+#      mode: 0400
   - name: edit ssh config to allow hadoop user
     lineinfile:
       dest: /etc/ssh/sshd_config
