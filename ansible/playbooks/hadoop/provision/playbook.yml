@@ -14,18 +14,29 @@
   - name: add linux user hadoop
     user:
       name: hadoop
+      comment: "hadoop service user"
+      generate_ssh_key: yes
+      ssh_key_file: .ssh/id_rsa
+      ssh_key_comment: "passwordless ssh"
+      ssh_key_passphrase:
+      ssh_key_type: rsa
+#  - name: set authorized key from file
+#    authorized_key:
+#      user: hadoop
+#      state: present
+#      key: "{{ lookup('file', '/home/hadoop/.ssh/id_rsa.pub') }}"
   - name: edit ssh config to allow hadoop user
     lineinfile:
-        dest: /etc/ssh/sshd_config
-        regexp: '^AllowUsers'
-        line: "AllowUsers {{usernames | join(' ')}}"
-        create: yes
+      dest: /etc/ssh/sshd_config
+      regexp: '^AllowUsers'
+      line: "AllowUsers {{usernames | join(' ')}}"
+      create: yes
   - name: edit ssh config to allow PubKeyAuthentication
     lineinfile:
-        dest: /etc/ssh/sshd_config
-        regexp: '^#PubkeyAuthentication.*'
-        line: 'PubkeyAuthentication yes'
-        create: yes
+      dest: /etc/ssh/sshd_config
+      regexp: '^#PubkeyAuthentication.*'
+      line: 'PubkeyAuthentication yes'
+      create: yes
   - name: get JAVA_HOME
     shell: "dirname $(dirname $(readlink -f $(which javac)))"
     register: JAVA_HOME
@@ -39,6 +50,30 @@
     lineinfile:
       path: /home/hadoop/.bashrc
       line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes
+  - name: export HADOOP_HOME for vagrant user
+    lineinfile:
+      path: /home/vagrant/.bashrc
+      line: export HADOOP_HOME=/opt/hadoop/hadoop-2.7.1
+      state: present
+      create: yes
+  - name: export HADOOP_HOME for hadoop user
+    lineinfile:
+      path: /home/hadoop/.bashrc
+      line: export HADOOP_HOME=/opt/hadoop/hadoop-2.7.1
+      state: present
+      create: yes
+  - name: alias hdfs for hadoop user
+    lineinfile:
+      path: /home/hadoop/.bashrc
+      line: alias hdfs=$HADOOP_HOME/bin/hdfs
+      state: present
+      create: yes
+  - name: alias hdfs for vagrant user
+    lineinfile:
+      path: /home/vagrant/.bashrc
+      line: alias hdfs=$HADOOP_HOME/bin/hdfs
       state: present
       create: yes
   - name: download hadoop release
