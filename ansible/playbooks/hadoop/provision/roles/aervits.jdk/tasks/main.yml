@@ -1,0 +1,6 @@
+---
+# tasks file for aervits.jdk
+  - name: install latest JDK release
+    package:
+      name: java-1.8.0-openjdk-devel.x86_64
+      state: latest

@@ -1,0 +1,6 @@
+---
+# defaults file for aervits.ssh
+  vars:
+    usernames:
+       - vagrant
+       - hadoop

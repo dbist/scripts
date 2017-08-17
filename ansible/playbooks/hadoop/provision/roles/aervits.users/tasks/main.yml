@@ -1,0 +1,52 @@
+---
+# tasks file for aervits.users
+  - name: add linux user hadoop
+    user:
+      name: hadoop
+      comment: "hadoop service user"
+      generate_ssh_key: yes
+      ssh_key_file: .ssh/id_rsa
+      ssh_key_comment: "passwordless ssh"
+      ssh_key_passphrase:
+      ssh_key_type: rsa
+#  - name: set authorized key from file
+#    authorized_key:
+#      user: hadoop
+#      state: present
+#      key: "{{ lookup('file', '/home/hadoop/.ssh/id_rsa.pub') }}"
+#  - name: change permissions on hadoop service user authorized_keys
+#    file:
+#      path: /home/hadoop/.ssh/authorized_keys
+#      owner: hadoop
+#      group: hadoop
+#      mode: 0400
+  - name: get JAVA_HOME
+    shell: "dirname $(dirname $(readlink -f $(which javac)))"
+    register: JAVA_HOME
+  - name: export JAVA_HOME for users
+    lineinfile:
+      path: /home/vagrant/.bashrc
+      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes
+  - name: export JAVA_HOME for users
+    lineinfile:
+      path: /home/hadoop/.bashrc
+      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes
+  - name: get JAVA_HOME
+    shell: "dirname $(dirname $(readlink -f $(which javac)))"
+    register: JAVA_HOME
+  - name: export JAVA_HOME for users
+    lineinfile:
+      path: /home/vagrant/.bashrc
+      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes
+  - name: export JAVA_HOME for users
+    lineinfile:
+      path: /home/hadoop/.bashrc
+      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes

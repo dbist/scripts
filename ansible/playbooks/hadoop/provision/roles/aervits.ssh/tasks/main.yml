@@ -1,0 +1,30 @@
+---
+# tasks file for aervits.ssh
+  - name: edit ssh config to allow hadoop user
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^AllowUsers'
+      line: "AllowUsers {{usernames | join(' ')}}"
+      create: yes
+  - name: edit ssh config to allow PubKeyAuthentication
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^#PubkeyAuthentication.*'
+      line: 'PubkeyAuthentication yes'
+      create: yes
+  - name: edit ssh config to allow user
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^AllowUsers'
+      line: "AllowUsers {{usernames | join(' ')}}"
+      create: yes
+  - name: edit ssh config to allow PubKeyAuthentication
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^#PubkeyAuthentication.*'
+      line: 'PubkeyAuthentication yes'
+      create: yes
+  - name: restart sshd service
+    service:
+      name: sshd
+      state: restarted
