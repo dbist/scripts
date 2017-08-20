@@ -9,6 +9,15 @@
       ssh_key_comment: "passwordless ssh"
       ssh_key_passphrase:
       ssh_key_type: rsa
+  - name: add linux user hbase
+    user:
+      name: hbase
+      comment: "hbase service user"
+      generate_ssh_key: yes
+      ssh_key_file: .ssh/id_rsa
+      ssh_key_comment: "passwordless ssh"
+      ssh_key_passphrase:
+      ssh_key_type: rsa
 #  - name: set authorized key from file
 #    authorized_key:
 #      user: hadoop
@@ -23,30 +32,42 @@
   - name: get JAVA_HOME
     shell: "dirname $(dirname $(readlink -f $(which javac)))"
     register: JAVA_HOME
-  - name: export JAVA_HOME for users
+  - name: export JAVA_HOME for user vagrant
     lineinfile:
       path: /home/vagrant/.bashrc
       line: export JAVA_HOME={{ JAVA_HOME.stdout }}
       state: present
       create: yes
-  - name: export JAVA_HOME for users
+  - name: export JAVA_HOME for user hadoop
     lineinfile:
       path: /home/hadoop/.bashrc
+      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes
+  - name: export JAVA_HOME for user hbase
+    lineinfile:
+      path: /home/hbase/.bashrc
       line: export JAVA_HOME={{ JAVA_HOME.stdout }}
       state: present
       create: yes
   - name: get JAVA_HOME
     shell: "dirname $(dirname $(readlink -f $(which javac)))"
     register: JAVA_HOME
-  - name: export JAVA_HOME for users
+  - name: export JAVA_HOME for user vagrant
     lineinfile:
       path: /home/vagrant/.bashrc
       line: export JAVA_HOME={{ JAVA_HOME.stdout }}
       state: present
       create: yes
-  - name: export JAVA_HOME for users
+  - name: export JAVA_HOME for user hadoop
     lineinfile:
       path: /home/hadoop/.bashrc
+      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      state: present
+      create: yes
+  - name: export JAVA_HOME for user hbase
+    lineinfile:
+      path: /home/hbase/.bashrc
       line: export JAVA_HOME={{ JAVA_HOME.stdout }}
       state: present
       create: yes

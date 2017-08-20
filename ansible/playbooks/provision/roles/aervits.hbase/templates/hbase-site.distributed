@@ -23,7 +23,7 @@
 <configuration>
   <property>
     <name>hbase.rootdir</name>
-    <value>hdfs://c7201.ambari.apache.org:8020/apps/hbase</value>
+    <value>hdfs://{{ansible_nodename}}:9000/apps/hbase</value>
   </property>
   <property>
     <name>hbase.cluster.distributed</name>
