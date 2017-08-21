@@ -1,5 +1,17 @@
 ---
 # tasks file for aervits.hbase
+  - name: export HADOOP_HOME for hbase user
+    lineinfile:
+      path: /home/hbase/.bashrc
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
+      state: present
+      create: yes
+  - name: alias hdfs for hbase user
+    lineinfile:
+      path: /home/hbase/.bashrc
+      line: alias hdfs=$HADOOP_HOME/bin/hdfs
+      state: present
+      create: yes
   - name: export HBASE_HOME for vagrant user
     lineinfile:
       path: /home/vagrant/.bashrc
