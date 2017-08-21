@@ -33,14 +33,8 @@
   - name: download hbase release
     get_url:
       url: "{{ hbase_url }}"
-#      url: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
-#      dest: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
-#      url: https://dist.apache.org/repos/dist/dev/hbase/hbase-2.0.0-alpha-2RC0/hbase-2.0.0-alpha2-bin.tar.gz
-#      url: {{ hbase_url }}
       dest: "/tmp/{{ hbase_version }}.bin.tar.gz"
       checksum: "sha1:{{ hbase_sha1_sum }}"
-#      checksum: "sha1:8412A3DD0907EE8681DA337A12859F2CCDC18F42"
-
   - name: create hbase directory
     file:
       path: /opt/hbase
@@ -50,7 +44,6 @@
       mode: 0775
   - name: extract hbase release
     unarchive:
-#      src: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
       src: "/tmp/{{ hbase_version }}.bin.tar.gz"
       dest: /opt/hbase
       remote_src: yes
@@ -60,6 +53,12 @@
     template:
       src: templates/hbase-site.distributed
       dest: "/opt/hbase/{{ hbase_version }}/conf/hbase-site.xml"
+  - name: edit hbase-env.sh JVM args
+    lineinfile:
+      dest: "/opt/hbase/{{ hbase_version }}/conf/hbase-env.sh"
+      regexp: '^export HBASE_OPTS='
+      line: 'export HBASE_OPTS="-XX:+UseConcMarkSweepGC -XX:ParallelGCThreads=4"'
+      create: yes
   - name: change hbase directory permissions
     file:
       path: "/opt/hbase/{{ hbase_version }}"
