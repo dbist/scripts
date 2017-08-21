@@ -3,19 +3,19 @@
   - name: export HBASE_HOME for vagrant user
     lineinfile:
       path: /home/vagrant/.bashrc
-      line: export HBASE_HOME=/opt/hbase/hbase-2.0.0-alpha-1
+      line: export HBASE_HOME="/opt/hbase/{{ hbase_version }}"
       state: present
       create: yes
   - name: export HBASE_HOME for hadoop user
     lineinfile:
       path: /home/hadoop/.bashrc
-      line: export HBASE_HOME=/opt/hbase/hbase-2.0.0-alpha-1
+      line: export HBASE_HOME="/opt/hbase/{{ hbase_version }}"
       state: present
       create: yes
   - name: export HBASE_HOME for hbase user
     lineinfile:
       path: /home/hbase/.bashrc
-      line: export HBASE_HOME=/opt/hbase/hbase-2.0.0-alpha-1
+      line: export HBASE_HOME="/opt/hbase/{{ hbase_version }}"
       state: present
       create: yes
   - name: alias hbase for hbase user
@@ -32,10 +32,13 @@
       create: yes
   - name: download hbase release
     get_url:
-      url: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
-      dest: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
+      url: "{{ hbase_url }}"
+#      url: http://apache.ip-guide.com/hbase/2.0.0-alpha-1/hbase-2.0.0-alpha-1-bin.tar.gz
+#      dest: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
 #      url: https://dist.apache.org/repos/dist/dev/hbase/hbase-2.0.0-alpha-2RC0/hbase-2.0.0-alpha2-bin.tar.gz
-#      dest: /tmp/hbase-2.0.0-alpha2-bin.tar.gz
+#      url: {{ hbase_url }}
+      dest: "/tmp/{{ hbase_version }}.bin.tar.gz"
+      checksum: "sha1:{{ hbase_sha1_sum }}"
 #      checksum: "sha1:8412A3DD0907EE8681DA337A12859F2CCDC18F42"
 
   - name: create hbase directory
@@ -47,18 +50,19 @@
       mode: 0775
   - name: extract hbase release
     unarchive:
-      src: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
+#      src: /tmp/hbase-2.0.0-alpha-1-bin.tar.gz
+      src: "/tmp/{{ hbase_version }}.bin.tar.gz"
       dest: /opt/hbase
       remote_src: yes
       keep_newer: yes
-      creates: /opt/hbase/hbase-2.0.0-alpha-1
+      creates: "/opt/hbase/{{ hbase_version }}"
   - name: configure hbase-site.xml
     template:
       src: templates/hbase-site.distributed
-      dest: /opt/hbase/hbase-2.0.0-alpha-1/conf/hbase-site.xml
+      dest: "/opt/hbase/{{ hbase_version }}/conf/hbase-site.xml"
   - name: change hbase directory permissions
     file:
-      path: /opt/hbase/hbase-2.0.0-alpha-1
+      path: "/opt/hbase/{{ hbase_version }}"
       state: directory
       owner: hbase
       group: hbase

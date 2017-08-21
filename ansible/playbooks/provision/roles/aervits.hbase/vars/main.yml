@@ -1,2 +1,5 @@
 ---
 # vars file for aervits.hbase
+   hbase_version: "hbase-2.0.0-alpha2"
+   hbase_url: https://dist.apache.org/repos/dist/dev/hbase/hbase-2.0.0-alpha-2RC0/hbase-2.0.0-alpha2-bin.tar.gz
+   hbase_sha1_sum: 8412A3DD0907EE8681DA337A12859F2CCDC18F42
