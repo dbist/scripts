@@ -3,13 +3,13 @@
   - name: export HADOOP_HOME for vagrant user
     lineinfile:
       path: /home/vagrant/.bashrc
-      line: export HADOOP_HOME=/opt/hadoop/hadoop-2.7.1
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
       state: present
       create: yes
   - name: export HADOOP_HOME for hadoop user
     lineinfile:
       path: /home/hadoop/.bashrc
-      line: export HADOOP_HOME=/opt/hadoop/hadoop-2.7.1
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
       state: present
       create: yes
   - name: alias hdfs for hadoop user
@@ -26,12 +26,9 @@
       create: yes
   - name: download hadoop release
     get_url:
-      url: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
-      dest: /tmp/hadoop-2.7.1.tar.gz
-      checksum: "sha1:8AA2E1E8DBE0EFEB2E98AC24C0EAE37C5F94764C"
-#      url: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-3.0.0-alpha4/hadoop-3.0.0-alpha4.tar.gz
-#      dest: /tmp/hadoop-3.0.0-alpha4.tar.gz
-
+      url: "{{ hadoop_url }}"
+      dest: "/tmp/{{ hadoop_version  }}.tar.gz"
+      checksum: "sha1:{{ hadoop_sha1_sum }}"
   - name: create hadoop directory
     file:
       path: /opt/hadoop
@@ -41,31 +38,30 @@
       mode: 0775
   - name: extract hadoop release
     unarchive:
-##      src: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-3.0.0-alpha4/hadoop-3.0.0-alpha4.tar.gz
-      src: /tmp/hadoop-2.7.1.tar.gz
+      src: "/tmp/{{ hadoop_version  }}.tar.gz"
       dest: /opt/hadoop
       remote_src: yes
       keep_newer: yes
-      creates: /opt/hadoop/hadoop-2.7.1
+      creates: "/opt/hadoop/{{ hadoop_version  }}"
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml
-      dest: /opt/hadoop/hadoop-2.7.1/etc/hadoop/core-site.xml
+      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/core-site.xml"
   - name: configure hdfs-site.xml
     template:
       src: templates/hadoop/hdfs-site.xml
-      dest: /opt/hadoop/hadoop-2.7.1/etc/hadoop/hdfs-site.xml
+      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/hdfs-site.xml"
   - name: configure mapred-site.xml
     template:
       src: templates/hadoop/mapred-site.xml
-      dest: /opt/hadoop/hadoop-2.7.1/etc/hadoop/mapred-site.xml
+      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/mapred-site.xml"
   - name: configure yarn-site.xml
     template:
       src: templates/hadoop/yarn-site.xml
-      dest: /opt/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml
+      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/yarn-site.xml"
   - name: change hadoop directory permissions
     file:
-      path: /opt/hadoop/hadoop-2.7.1
+      path: "/opt/hadoop/{{ hadoop_version }}"
       state: directory
       owner: hadoop
       group: hadoop
