@@ -1,9 +1,9 @@
 ---
 # tasks file for aervits.users
-  - name: add service user "{{ service_users }}"
+  - name: add service user "{{ item }}"
     user:
-      name: "{{ service_users }}"
-      comment: "{{ service_users }} service user"
+      name: "{{ item }}"
+      comment: "{{ item }} service user"
       generate_ssh_key: yes
       ssh_key_file: .ssh/id_rsa
       ssh_key_comment: "passwordless ssh"
