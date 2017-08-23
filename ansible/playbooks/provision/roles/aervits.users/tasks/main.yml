@@ -1,23 +1,15 @@
 ---
 # tasks file for aervits.users
-  - name: add linux user hadoop
+  - name: add service user "{{ service_users }}"
     user:
-      name: hadoop
-      comment: "hadoop service user"
+      name: "{{ service_users }}"
+      comment: "{{ service_users }} service user"
       generate_ssh_key: yes
       ssh_key_file: .ssh/id_rsa
       ssh_key_comment: "passwordless ssh"
       ssh_key_passphrase:
       ssh_key_type: rsa
-  - name: add linux user hbase
-    user:
-      name: hbase
-      comment: "hbase service user"
-      generate_ssh_key: yes
-      ssh_key_file: .ssh/id_rsa
-      ssh_key_comment: "passwordless ssh"
-      ssh_key_passphrase:
-      ssh_key_type: rsa
+    with_items: "{{ service_users }}"
 #  - name: set authorized key from file
 #    authorized_key:
 #      user: hadoop
