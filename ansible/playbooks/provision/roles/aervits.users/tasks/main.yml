@@ -10,56 +10,14 @@
       ssh_key_passphrase:
       ssh_key_type: rsa
     with_items: "{{ service_users }}"
-#  - name: set authorized key from file
-#    authorized_key:
-#      user: hadoop
-#      state: present
-#      key: "{{ lookup('file', '/home/hadoop/.ssh/id_rsa.pub') }}"
-#  - name: change permissions on hadoop service user authorized_keys
-#    file:
-#      path: /home/hadoop/.ssh/authorized_keys
-#      owner: hadoop
-#      group: hadoop
-#      mode: 0400
+
   - name: get JAVA_HOME
     shell: "dirname $(dirname $(readlink -f $(which javac)))"
     register: JAVA_HOME
-  - name: export JAVA_HOME for user vagrant
+
+  - name: export JAVA_HOME
     lineinfile:
-      path: /home/vagrant/.bashrc
-      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
-      state: present
-      create: yes
-  - name: export JAVA_HOME for user hadoop
-    lineinfile:
-      path: /home/hadoop/.bashrc
-      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
-      state: present
-      create: yes
-  - name: export JAVA_HOME for user hbase
-    lineinfile:
-      path: /home/hbase/.bashrc
-      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
-      state: present
-      create: yes
-  - name: get JAVA_HOME
-    shell: "dirname $(dirname $(readlink -f $(which javac)))"
-    register: JAVA_HOME
-  - name: export JAVA_HOME for user vagrant
-    lineinfile:
-      path: /home/vagrant/.bashrc
-      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
-      state: present
-      create: yes
-  - name: export JAVA_HOME for user hadoop
-    lineinfile:
-      path: /home/hadoop/.bashrc
-      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
-      state: present
-      create: yes
-  - name: export JAVA_HOME for user hbase
-    lineinfile:
-      path: /home/hbase/.bashrc
-      line: export JAVA_HOME={{ JAVA_HOME.stdout }}
+      path: /etc/environment
+      line: "export JAVA_HOME={{ JAVA_HOME.stdout }}"
       state: present
       create: yes
