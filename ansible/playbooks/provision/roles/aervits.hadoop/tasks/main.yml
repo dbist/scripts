@@ -1,26 +1,14 @@
 ---
 # tasks file for aervits.hadoop
-  - name: export HADOOP_HOME for vagrant user
+  - name: export HADOOP_HOME
     lineinfile:
-      path: /home/vagrant/.bashrc
+      path: /etc/environment
       line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
       state: present
       create: yes
-  - name: export HADOOP_HOME for hadoop user
+  - name: alias hdfs
     lineinfile:
-      path: /home/hadoop/.bashrc
-      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
-      state: present
-      create: yes
-  - name: alias hdfs for hadoop user
-    lineinfile:
-      path: /home/hadoop/.bashrc
-      line: alias hdfs=$HADOOP_HOME/bin/hdfs
-      state: present
-      create: yes
-  - name: alias hdfs for vagrant user
-    lineinfile:
-      path: /home/vagrant/.bashrc
+      path: /etc/bashrc
       line: alias hdfs=$HADOOP_HOME/bin/hdfs
       state: present
       create: yes
