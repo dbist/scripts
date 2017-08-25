@@ -11,13 +11,3 @@
       ssh_key_type: rsa
     with_items: "{{ service_users }}"
 
-  - name: get JAVA_HOME
-    shell: "dirname $(dirname $(readlink -f $(which javac)))"
-    register: JAVA_HOME
-
-  - name: export JAVA_HOME
-    lineinfile:
-      path: /etc/environment
-      line: "export JAVA_HOME={{ JAVA_HOME.stdout }}"
-      state: present
-      create: yes

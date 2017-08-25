@@ -1,22 +1,11 @@
 ---
 # tasks file for aervits.hadoop
-  - name: export HADOOP_HOME
-    lineinfile:
-      path: /etc/environment
-      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
-      state: present
-      create: yes
-  - name: alias hdfs
-    lineinfile:
-      path: /etc/bashrc
-      line: alias hdfs=$HADOOP_HOME/bin/hdfs
-      state: present
-      create: yes
   - name: download hadoop release
     get_url:
       url: "{{ hadoop_url }}"
-      dest: "/tmp/{{ hadoop_version  }}.tar.gz"
+      dest: "/tmp/{{ hadoop_version }}.tar.gz"
       checksum: "sha1:{{ hadoop_sha1_sum }}"
+
   - name: create hadoop directory
     file:
       path: /opt/hadoop
@@ -24,29 +13,35 @@
       owner: hadoop
       group: hadoop
       mode: 0775
+
   - name: extract hadoop release
     unarchive:
-      src: "/tmp/{{ hadoop_version  }}.tar.gz"
+      src: "/tmp/{{ hadoop_version }}.tar.gz"
       dest: /opt/hadoop
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/hadoop/{{ hadoop_version  }}"
+      creates: "/opt/hadoop/{{ hadoop_version }}"
+
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml
       dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/core-site.xml"
+
   - name: configure hdfs-site.xml
     template:
       src: templates/hadoop/hdfs-site.xml
       dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/hdfs-site.xml"
+
   - name: configure mapred-site.xml
     template:
       src: templates/hadoop/mapred-site.xml
       dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/mapred-site.xml"
+
   - name: configure yarn-site.xml
     template:
       src: templates/hadoop/yarn-site.xml
       dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/yarn-site.xml"
+
   - name: change hadoop directory permissions
     file:
       path: "/opt/hadoop/{{ hadoop_version }}"
@@ -55,3 +50,17 @@
       group: hadoop
       mode: 0775
       recurse: yes
+
+  - name: export HADOOP_HOME
+    lineinfile:
+      path: /etc/environment
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
+      state: present
+      create: yes
+
+  - name: alias hdfs
+    lineinfile:
+      path: /etc/bashrc
+      line: alias hdfs=$HADOOP_HOME/bin/hdfs
+      state: present
+      create: yes
