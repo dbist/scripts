@@ -4,3 +4,14 @@
     package:
       name: java-1.8.0-openjdk-devel.x86_64
       state: latest
+
+  - name: get JAVA_HOME
+    shell: "dirname $(dirname $(readlink -f $(which javac)))"
+    register: JAVA_HOME
+
+  - name: export JAVA_HOME
+    lineinfile:
+      path: /etc/environment
+      line: "export JAVA_HOME={{ JAVA_HOME.stdout }}"
+      state: present
+      create: yes
