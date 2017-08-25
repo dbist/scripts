@@ -49,9 +49,17 @@
       line: export HBASE_HOME="/opt/hbase/{{ hbase_version }}"
       state: present
       create: yes
-  - name: alias hbase
+
+  - name: alias hbase command
     lineinfile:
       path: /etc/bashrc
       line: alias hbase=$HBASE_HOME/bin/hbase
+      state: present
+      create: yes
+
+  - name: add hbase to hadoop classpath
+    lineinfile:
+      path: /etc/bashrc
+      line: export HADOOP_CLASSPATH=`hbase classpath`
       state: present
       create: yes

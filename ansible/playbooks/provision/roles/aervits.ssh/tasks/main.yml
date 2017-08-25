@@ -9,7 +9,6 @@
   - name: edit ssh config to allow user
     lineinfile:
       dest: /etc/ssh/sshd_config
-      regexp: '^AllowUsers'
       line: "AllowUsers {{usernames | join(' ')}}"
       create: yes
   - name: restart sshd service

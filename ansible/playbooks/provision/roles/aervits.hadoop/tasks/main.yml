@@ -58,9 +58,16 @@
       state: present
       create: yes
 
-  - name: alias hdfs
+  - name: alias hdfs command
     lineinfile:
       path: /etc/bashrc
       line: alias hdfs=$HADOOP_HOME/bin/hdfs
+      state: present
+      create: yes
+
+  - name: alias hadoop command
+    lineinfile:
+      path: /etc/bashrc
+      line: alias hadoop=$HADOOP_HOME/bin/hadoop
       state: present
       create: yes
