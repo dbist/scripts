@@ -6,22 +6,11 @@
     copy:
       src: /etc/hosts
       dest: /etc/hosts
-  - name: make sure wget is latest
-    yum:
-      name: wget
+  - name: get all required prerequisites
+    package:
+      name: "{{ item }}"
       state: latest
-  - name: make sure ntp is latest
-    yum:
-      name: ntp
-      state: latest
-  - name: make sure nscd is latest
-    yum:
-      name: nscd
-      state: latest
-  - name: make sure libselinux-python is latest
-    yum:
-      name: libselinux-python
-      state: latest
+    with_items: wget, ntp, nscd, libselinux-python
   - name: ensure nptd is running
     service:
       name: ntpd
