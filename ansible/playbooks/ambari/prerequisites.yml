@@ -43,15 +43,10 @@
       limit_item: nofile
       value: 64000
       use_max: yes
-  - name: add unix user admin
+  - name: add unix user "{{ item }}"
     user:
-      name: admin
-  - name: add unix user guest
-    user:
-      name: guest
-  - name: add unix user centos
-    user:
-      name: centos
+      name: "{{ item }}"
+    with_items: admin, guest, centos
   handlers:
     - name: restart ntpd
       service:
