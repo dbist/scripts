@@ -38,6 +38,14 @@
       group: hadoop
       mode: 0755
 
+  - name: create datanode short-circuit path directory
+    file:
+      path: /var/log/hadoop-yarn
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0755
+
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml
