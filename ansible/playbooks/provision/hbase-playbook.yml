@@ -5,7 +5,7 @@
     - aervits.ssh
     - aervits.users
     - aervits.hadoop
-    - aervits.hbase
+#    - aervits.hbase
   remote_user: vagrant
   become: true
   vars:

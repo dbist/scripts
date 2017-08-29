@@ -22,6 +22,22 @@
       keep_newer: yes
       creates: "/opt/hadoop/{{ hadoop_version }}"
 
+  - name: create hadoop namenode directory
+    file:
+      path: /dev/hadoop
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0775
+
+  - name: create datanode short-circuit path directory
+    file:
+      path: /var/lib/hadoop-hdfs
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0755
+
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml
