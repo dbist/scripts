@@ -1,10 +1,8 @@
 ---
-- hosts: ambari-server
-  remote_user: centos
-  tasks:
+# tasks file for aervits.ambari-server
   - name: download ambari repo
     get_url:
-      url: http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.5.1.0/ambari.repo
+      url: "{{ ambari_repo }}"
       dest: /etc/yum.repos.d/ambari.repo
   - name: make sure ambari-server is latest
     yum:
@@ -12,7 +10,3 @@
       state: latest
   - name: run ambari-server silent install
     shell: ambari-server setup -s
-  - name: start ambari server
-    service:
-      name: ambari-server
-      state: started

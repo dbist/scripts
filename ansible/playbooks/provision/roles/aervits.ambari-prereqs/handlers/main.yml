@@ -1,0 +1,10 @@
+---
+# handlers file for aervits.ambari-prereqs
+  - name: restart ntpd
+    service:
+      name: ntpd
+      state: restarted
+  - name: restart nscd
+    service:
+      name: nscd
+      state: restarted

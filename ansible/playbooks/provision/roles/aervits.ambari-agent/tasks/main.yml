@@ -1,0 +1,16 @@
+---
+# tasks file for aervits.ambari-agent
+  - name: download ambari repo
+    get_url:
+      url: "{{ ambari_repo }}"
+      dest: /etc/yum.repos.d/ambari.repo
+  - name: make sure ambari-agent is latest
+    yum:
+      name: ambari-agent
+      state: latest
+  - name: replace the default ambari-agent template with ambari-server name
+    replace:
+      path: /etc/ambari-agent/conf/ambari-agent.ini
+      regexp: 'localhost'
+      replace: "{{ ambari_server_hostname }}"
+      backup: yes

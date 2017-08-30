@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - aervits.ambari-prereqs
+    - aervits.ambari-agent
+  remote_user: centos
+  become: true

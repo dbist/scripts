@@ -1,12 +1,5 @@
 ---
-- hosts: all
-  remote_user: centos
-  vars:
-    users:
-      - centos
-      - guest
-      - admin
-  tasks:
+# tasks file for aervits.ambari-prereqs
   - name: make sure all host files match
     copy:
       src: /etc/hosts
@@ -53,12 +46,3 @@
       name: "{{ item }}"
       state: present
     with_items: "{{ users }}"
-  handlers:
-    - name: restart ntpd
-      service:
-        name: ntpd
-        state: restarted
-    - name: restart nscd
-      service:
-        name: nscd
-        state: restarted
