@@ -1,0 +1,6 @@
+---
+# vars file for aervits.ambari-prereqs
+  users:
+    - centos
+    - guest
+    - admin

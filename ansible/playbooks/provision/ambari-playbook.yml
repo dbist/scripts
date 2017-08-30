@@ -1,0 +1,11 @@
+---
+- hosts: all
+  roles:
+    - aervits.ambari-prereqs
+  remote_user: centos
+  become: true
+#  vars:
+#    usernames:
+#       - hbase
+#       - hadoop
+#       - vagrant
