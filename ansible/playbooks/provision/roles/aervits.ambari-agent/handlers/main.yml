@@ -1,2 +1,6 @@
 ---
 # handlers file for aervits.ambari-agent
+  - name: restart ambari-agent
+    service:
+      name: ambari-agent
+      state: restarted
