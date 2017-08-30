@@ -5,8 +5,3 @@
     - aervits.ambari-agent
   remote_user: centos
   become: true
-#  vars:
-#    usernames:
-#       - hbase
-#       - hadoop
-#       - vagrant

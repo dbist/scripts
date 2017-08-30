@@ -1,0 +1,6 @@
+---
+# handlers file for aervits.ambari-server
+  - name: restart ambari server
+    service:
+      name: ambari-server
+      state: restarted
