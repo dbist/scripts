@@ -6,8 +6,11 @@
       comment: "{{ item }} service user"
       generate_ssh_key: yes
       ssh_key_file: .ssh/id_rsa
-      ssh_key_comment: "passwordless ssh"
-      ssh_key_passphrase:
       ssh_key_type: rsa
     with_items: "{{ service_users }}"
-
+  - name: create authorized_keys file
+    authorized_key:
+      user: "{{ item }}"
+      state: present
+      key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    with_items: "{{ service_users }}"
