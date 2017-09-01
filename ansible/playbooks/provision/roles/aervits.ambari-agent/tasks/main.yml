@@ -4,6 +4,7 @@
     get_url:
       url: "{{ ambari_repo }}"
       dest: /etc/yum.repos.d/ambari.repo
+      force: yes
   - name: make sure ambari-agent is latest
     yum:
       name: ambari-agent
