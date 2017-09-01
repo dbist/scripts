@@ -5,9 +5,9 @@
       url: "{{ ambari_repo }}"
       dest: /etc/yum.repos.d/ambari.repo
       force: yes
-  - name: make sure ambari-agent is latest
+  - name: make sure ambari packages are the latest
     yum:
-      name: ambari-agent
+      name: ambari*
       state: latest
   - name: replace the default ambari-agent template with ambari-server name
     replace:
