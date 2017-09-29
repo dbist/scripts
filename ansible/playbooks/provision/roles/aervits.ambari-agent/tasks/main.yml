@@ -6,9 +6,10 @@
       dest: /etc/yum.repos.d/ambari.repo
       force: yes
   - name: make sure ambari packages are the latest
-    yum:
-      name: ambari*
+    package:
+      name: "{{ item }}"
       state: latest
+    with_items: ambari-agent, ambari-metrics-hadoop-sink, ambari-logsearch-logfeeder, ambari-infra-solr, ambari-logsearch-portal, ambari-metrics-common, ambari-metrics-grafana, ambari-metrics-monitor, ambari-metrics-collector, ambari-infra-solr-client
   - name: replace the default ambari-agent template with ambari-server name
     replace:
       path: /etc/ambari-agent/conf/ambari-agent.ini
