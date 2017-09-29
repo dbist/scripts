@@ -6,7 +6,7 @@
       dest: /etc/yum.repos.d/ambari.repo
       force: yes
   - name: make sure ambari-server is latest
-    yum:
+    package:
       name: ambari-server
       state: latest
   - name: run ambari-server silent install
