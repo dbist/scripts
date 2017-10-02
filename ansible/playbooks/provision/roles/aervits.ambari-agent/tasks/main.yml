@@ -1,18 +1,26 @@
 ---
 # tasks file for aervits.ambari-agent
+
   - name: download ambari repo
     get_url:
       url: "{{ ambari_repo }}"
       dest: /etc/yum.repos.d/ambari.repo
       force: yes
+
   - name: make sure ambari packages are the latest
     package:
       name: "{{ item }}"
       state: latest
     with_items: ambari-agent, ambari-metrics-hadoop-sink, ambari-logsearch-logfeeder, ambari-infra-solr, ambari-logsearch-portal, ambari-metrics-common, ambari-metrics-grafana, ambari-metrics-monitor, ambari-metrics-collector, ambari-infra-solr-client
+
   - name: replace the default ambari-agent template with ambari-server name
     replace:
       path: /etc/ambari-agent/conf/ambari-agent.ini
       regexp: 'localhost'
       replace: "{{ ambari_server_hostname }}"
       backup: yes
+
+  - name: restart ambari-agent
+    service:
+      name: ambari-agent
+      state: restarted
