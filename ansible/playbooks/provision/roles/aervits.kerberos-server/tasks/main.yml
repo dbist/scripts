@@ -30,7 +30,7 @@
   - name: add admin principal
     shell: echo -e "{{ admin_principal_password }}\n{{ admin_principal_password }}" | kadmin.local -q "addprinc admin/admin"
 
-  - name: replace the default krb5 template with own
+  - name: replace the default kadm5 template with own
     template:
       src: templates/kadm5.acl
       dest: "/var/kerberos/krb5kdc/kadm5.acl"
