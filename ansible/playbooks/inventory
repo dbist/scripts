@@ -1,0 +1,8 @@
+[nodes]
+aervits-hdp[0:7].field.hortonworks.com
+
+[ambari-server]
+aervits-hdp0.field.hortonworks.com
+
+[kerberos-server]
+aervits-hdp3.field.hortonworks.com
