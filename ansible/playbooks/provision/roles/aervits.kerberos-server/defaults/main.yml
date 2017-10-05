@@ -1,6 +1,6 @@
 ---
 # defaults file for aervits.kerberos-server
 kerberos_server_hostname: "{{ groups['kerberos-server'][0] }}"
-realm: FIELD.HORTONWORKS.COM
+realm: HORTONWORKS.COM
 master_db_pass: admin
 admin_principal_password: admin
