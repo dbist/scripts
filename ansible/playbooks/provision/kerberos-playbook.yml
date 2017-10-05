@@ -1,0 +1,8 @@
+---
+- hosts: all
+  roles:
+#    - aervits.ambari-prereqs
+#    - aervits.ambari-server
+    - aervits.kerberos-server
+  remote_user: centos
+  become: true
