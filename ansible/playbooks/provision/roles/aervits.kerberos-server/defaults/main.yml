@@ -1,0 +1,5 @@
+---
+# defaults file for aervits.kerberos-server
+
+master_db_pass: admin
+admin_principal_password: admin

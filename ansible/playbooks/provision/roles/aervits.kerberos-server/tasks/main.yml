@@ -1,0 +1,41 @@
+---
+# tasks file for aervits.kerberos-server
+
+  - name: install kerberos packages
+    package:
+      name: "{{ item }}"
+      state: latest
+    with_items: krb5-server, krb5-libs, krb5-workstation
+
+  - name: replace the default krb5 template with own
+    template:
+      src: templates/krb5.conf
+      dest: "/etc/krb5.conf"
+
+  - name: create the initial kerberos database
+    shell: echo -e "{{ master_db_pass }}\n{{ master_db_pass }}" | kdb5_util create -s; touch /var/kerberos/db_created creates=/var/kerberos/db_created
+
+  - name: start kdc server
+    service:
+      name: krb5kdc
+      state: restarted
+      enabled: yes
+
+  - name: start kdc admin server
+    service:
+      name: kadmin
+      state: restarted
+      enabled: yes
+
+  - name: add admin principal
+    shell: echo -e "{{ admin_principal_password }}\n{{ admin_principal_password }}" | kadmin.local -q "addprinc admin/admin"
+
+  - name: replace the default krb5 template with own
+    template:
+      src: templates/kadm5.acl
+      dest: "/var/kerberos/krb5kdc/kadm5.acl"
+
+  - name: restart kadmin server
+    service:
+      name: kadmin
+      state: restarted
