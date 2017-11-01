@@ -7,7 +7,7 @@
       dest: /etc/yum.repos.d/ambari.repo
       force: yes
 
-  - name: make sure ambari packages are the latest
+  - name: make sure ambari packages are current
     package:
       name: "{{ item }}"
       state: latest
