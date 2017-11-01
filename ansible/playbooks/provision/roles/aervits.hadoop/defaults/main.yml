@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.hadoop
-  hadoop_version: hadoop-2.7.1
-  hadoop_sha1_sum: 8AA2E1E8DBE0EFEB2E98AC24C0EAE37C5F94764C
-  hadoop_url: http://mirrors.advancedhosters.com/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
+  hadoop_version: hadoop-2.7.4
+  hadoop_sha1_sum: 33A4CC483A41127E3A34944E64C1204ED151027E
+  hadoop_url: http://download.nextag.com/apache/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz
