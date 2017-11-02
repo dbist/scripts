@@ -1,8 +1,0 @@
----
-# tasks file for aervits.git
-
-  - name: get all required prerequisites
-    package:
-      name: "{{ item }}"
-      state: latest
-    with_items: maven

@@ -1,6 +1,12 @@
 ---
 # tasks file for aervits.oozie
 
+  - name: get all required prerequisites
+    package:
+      name: "{{ item }}"
+      state: latest
+    with_items: git, svn, maven
+
   - name: create oozie directory
     file:
       path: /opt/oozie
@@ -22,6 +28,15 @@
       repo: 'https://github.com/apache/oozie.git'
       dest: /opt/oozie
       version: master
+
+  - name: change oozie directory ownership
+    file:
+      path: /opt/oozie
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+      recurse: yes
 
   - name: compile oozie from source
     command: /opt/oozie/bin/mkdistro.sh -DskipTests=true

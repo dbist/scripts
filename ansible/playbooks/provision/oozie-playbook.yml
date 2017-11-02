@@ -5,8 +5,6 @@
     - aervits.ssh
     - aervits.users
     - aervits.hadoop
-    - aervits.git
-    - aervits.mvn
     - aervits.oozie
   remote_user: vagrant
   become: true
