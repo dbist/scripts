@@ -1,2 +1,3 @@
 ---
 # defaults file for aervits.oozie
+  oozie_version: "master"

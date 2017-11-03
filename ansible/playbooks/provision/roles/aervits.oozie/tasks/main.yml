@@ -5,38 +5,64 @@
     package:
       name: "{{ item }}"
       state: latest
-    with_items: git, svn, maven
+    with_items: git, maven
 
-  - name: create oozie directory
-    file:
-      path: /opt/oozie
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
-
-  - name: oozie directory
-    file:
-      path: /opt/oozie
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
- 
   - name: download oozie source release
     git:
       repo: 'https://github.com/apache/oozie.git'
-      dest: /opt/oozie
-      version: master
+      dest: "/tmp/{{ oozie_version }}"
+      force: yes
+      version: "{{ oozie_version }}"
 
-  - name: change oozie directory ownership
+  - name: compile oozie from source
+    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -DskipTests=true"
+    args:
+      creates: "/tmp/{{ oozie_version }}/distro/oozie-5.0.0-beta1-distro.bin.tar.gz"
+
+  - name: change oozie tmp directory ownership
     file:
-      path: /opt/oozie
+      path: "/tmp/{{ oozie_version }}"
       state: directory
       owner: oozie
       group: oozie
       mode: 0775
       recurse: yes
 
-  - name: compile oozie from source
-    command: /opt/oozie/bin/mkdistro.sh -DskipTests=true
+  - name: create oozie directory
+    file:
+      path: "/opt/oozie/{{ oozie_version }}"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
+  - name: extract oozie release
+    unarchive:
+      src: "/tmp/{{ oozie_version }}/distro/target/oozie-5.0.0-beta1-distro.tar.gz"
+      dest: "/opt/oozie/{{ oozie_version }}"
+      remote_src: yes
+      keep_newer: yes
+      creates: "/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1"
+
+  - name: change oozie directory ownership
+    file:
+      path: "/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+      recurse: yes
+    
+  - name: export OOZIE_HOME
+    lineinfile:
+      path: /etc/environment
+      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
+      state: present
+      create: yes
+
+  - name: alias oozie command
+    lineinfile:
+      path: /etc/bashrc
+      line: alias oozie=$OOZIE_HOME/bin/oozie
+      state: present
+      create: yes
