@@ -17,7 +17,7 @@
   - name: compile oozie from source
     command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version }} -DskipTests=true"
     args:
-      creates: "/tmp/{{ oozie_version }}/distro/oozie-5.0.0-beta1-distro.bin.tar.gz"
+      creates: "/tmp/{{ oozie_version }}/distro/target/oozie-5.0.0-beta1-distro.tar.gz"
 
   - name: change oozie tmp directory ownership
     file:
@@ -75,12 +75,29 @@
       group: oozie
       mode: 0775
 
-# NEEDS WORK
-#  - name: copy hadoop jars into libext directory
-#    copy:
-#      src: "/tmp/master/server/target/dependency/{{ item }}"
-#      dest: $OOZIE_HOME/libext
-#      owner: oozie
-#      group: oozie
-#      mode: 0775
-#    with_items: hadoop-client-2.7.4.jar, hadoop-common-2.7.4.jar
+  - name: copy hadoop jars into libext directory
+    copy:
+      src: "/tmp/{{ oozie_version }}/server/target/dependency/{{ item }}"
+      dest: "$OOZIE_HOME/libext/{{ item }}"
+      owner: oozie
+      group: oozie
+      mode: 0775
+      remote_src: yes
+    with_items:
+      - "hadoop-client-{{ hadoop_version }}.jar"
+      - "hadoop-common-{{ hadoop_version }}.jar"
+      - "hadoop-annotations-{{ hadoop_version }}.jar"
+      - "hadoop-hdfs-{{ hadoop_version }}.jar"
+      - "hadoop-auth-{{ hadoop_version }}.jar"
+      - "hadoop-yarn-api-{{ hadoop_version }}.jar"
+      - "hadoop-yarn-client-{{ hadoop_version }}.jar"
+      - "hadoop-yarn-common-{{ hadoop_version }}.jar"
+      - "hadoop-yarn-server-common-{{ hadoop_version }}.jar"
+      - "hadoop-mapreduce-client-app-{{ hadoop_version }}.jar"
+      - "hadoop-mapreduce-client-common-{{ hadoop_version }}.jar"
+      - "hadoop-mapreduce-client-core-{{ hadoop_version }}.jar"
+      - "hadoop-mapreduce-client-jobclient-{{ hadoop_version }}.jar"
+      - "hadoop-mapreduce-client-shuffle-{{ hadoop_version }}.jar"
+      - guava-11.0.2.jar
+      - commons-collections-3.2.2.jar
+      - commons-codec-1.4.jar
