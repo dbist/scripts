@@ -15,7 +15,7 @@
       version: "{{ oozie_version }}"
 
   - name: compile oozie from source
-    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -DskipTests=true"
+    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version }} -DskipTests=true"
     args:
       creates: "/tmp/{{ oozie_version }}/distro/oozie-5.0.0-beta1-distro.bin.tar.gz"
 
@@ -56,7 +56,7 @@
   - name: export OOZIE_HOME
     lineinfile:
       path: /etc/environment
-      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
+      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1"
       state: present
       create: yes
 
@@ -66,3 +66,21 @@
       line: alias oozie=$OOZIE_HOME/bin/oozie
       state: present
       create: yes
+
+  - name: create libext directory
+    file:
+      path: "$OOZIE_HOME/libext"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
+# NEEDS WORK
+#  - name: copy hadoop jars into libext directory
+#    copy:
+#      src: "/tmp/master/server/target/dependency/{{ item }}"
+#      dest: $OOZIE_HOME/libext
+#      owner: oozie
+#      group: oozie
+#      mode: 0775
+#    with_items: hadoop-client-2.7.4.jar, hadoop-common-2.7.4.jar
