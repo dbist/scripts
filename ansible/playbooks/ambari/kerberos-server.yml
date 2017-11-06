@@ -1,8 +1,0 @@
----
-- hosts: all
-  remote_user: centos
-  tasks:
-  - name: install kdc libraries
-    yum:
-      name: krb5-libs,krb5-workstation,krb5-server
-      state: latest
