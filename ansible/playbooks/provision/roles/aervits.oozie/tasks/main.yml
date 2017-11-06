@@ -5,7 +5,7 @@
     package:
       name: "{{ item }}"
       state: latest
-    with_items: git, maven
+    with_items: git, maven, unzip
 
   - name: download oozie source release
     git:
@@ -101,3 +101,17 @@
       - guava-11.0.2.jar
       - commons-collections-3.2.2.jar
       - commons-codec-1.4.jar
+
+  - name: download extjs and place in libext
+    get_url:
+      url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
+      dest: $OOZIE_HOME/libext
+
+  - name: change oozie libext directory ownership
+    file:
+      path: "/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1/libext"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+      recurse: yes
