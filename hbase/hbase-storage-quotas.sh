@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# based on HBASE-16961 script by Josh Elser
+
 reset=`tput sgr0`
 green=`tput setaf 2`
 
