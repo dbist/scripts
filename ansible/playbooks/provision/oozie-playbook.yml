@@ -1,10 +1,10 @@
 ---
 - hosts: all
   roles:
-#    - aervits.jdk
-#    - aervits.ssh
-#    - aervits.users
-#    - aervits.hadoop
+    - aervits.jdk
+    - aervits.ssh
+    - aervits.users
+    - aervits.hadoop
     - aervits.oozie
   remote_user: vagrant
   become: true
