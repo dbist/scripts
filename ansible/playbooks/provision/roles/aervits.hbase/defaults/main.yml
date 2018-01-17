@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.hbase
-  hbase_version: "hbase-2.0.0-alpha4"
-  hbase_url: http://mirror.stjschools.org/public/apache/hbase/2.0.0-alpha4/hbase-2.0.0-alpha4-bin.tar.gz
-  hbase_md5_sum: 5E117E07294C70B39A7AFF4BBCFC2EE0
+  hbase_version: "hbase-2.0.0-beta-1"
+  hbase_url: http://www-us.apache.org/dist/hbase/hbase-2.0.0-beta-1/hbase-2.0.0-beta-1-bin.tar.gz
+  hbase_md5_sum: 47 686149842A82C683F2686463813645
