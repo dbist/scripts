@@ -18,5 +18,3 @@ aervits-hdp0.field.hortonworks.com
 1. add REST call to add user-post-creation-hook
 2. add REST call to add user to ambari
 
-#### Ansible roles
-4. add hosts file role
