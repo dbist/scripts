@@ -4,6 +4,7 @@
     - aervits.jdk
     - aervits.ssh
     - aervits.users
+    - aervits.hosts
     - aervits.hadoop
     - aervits.oozie
   remote_user: vagrant
