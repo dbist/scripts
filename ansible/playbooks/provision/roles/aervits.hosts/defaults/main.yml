@@ -1,6 +1,5 @@
 ---
 # defaults file for aervits.hosts
 hostname_hosts_file_location: "/etc/hosts"
-hostname_hosts_backup: false
 hostname_fqdn_full: "{{ inventory_hostname }}"
 hostname_fqdn_short: "{{ inventory_hostname_short }}"

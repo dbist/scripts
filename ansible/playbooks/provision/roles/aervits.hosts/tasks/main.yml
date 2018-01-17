@@ -15,3 +15,4 @@
       line: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}{{ '   ' }}{{ ansible_fqdn }}{{ '   '}}{{ ansible_nodename }}"
       state: present
       insertafter: EOF
+      backup: yes
