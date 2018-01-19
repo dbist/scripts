@@ -36,3 +36,7 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+##TODO
+1. the role is not imdempotent, need to fix repeating "ip    fqdn   hostname" in consecutive runs
+

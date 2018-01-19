@@ -7,23 +7,13 @@
     hostname:
       name: "{{ ansible_nodename }}"
 
-#  - name: update the ipv4 part of hosts file
-#    lineinfile:
-#      dest: "{{ hostname_hosts_file_location }}"
-##      regexp: "^127.0.0.1"
-#      regexp: "^::1"
-#      line: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}{{ '   ' }}{{ ansible_fqdn }}{{ '   '}}{{ ansible_nodename }}"
-#      state: present
-#      insertafter: EOF
-#      backup: yes
-
-  - name: update the ipv4 part of hosts file
+  - name: update localhost
     lineinfile:
       path: "{{ hostname_hosts_file_location }}"
       regexp: '^127\.0\.0\.1'
-      line: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}{{ '   ' }}{{ ansible_fqdn }}{{ '   '}}{{ ansible_nodename }}"
+      line: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4{{'\n'}}{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}{{ '   ' }}{{ ansible_fqdn }}{{ '   '}}{{ ansible_nodename }}"
       state: present
-      insertafter: EOF
+#      insertafter: EOF
       backup: yes
       owner: root
       group: root
