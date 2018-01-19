@@ -66,6 +66,11 @@
       src: templates/hadoop/yarn-site.xml
       dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/yarn-site.xml"
 
+  - name: configure capacity-scheduler.xml
+    template:
+      src: templates/hadoop/capacity-scheduler.xml
+      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/capacity-scheduler.xml"
+
   - name: change hadoop directory permissions
     file:
       path: "/opt/hadoop/{{ hadoop_version }}"
@@ -93,5 +98,12 @@
     lineinfile:
       path: /etc/bashrc
       line: alias hadoop=$HADOOP_HOME/bin/hadoop
+      state: present
+      create: yes
+
+  - name: alias yarn command
+    lineinfile:
+      path: /etc/bashrc
+      line: alias yarn=$HADOOP_HOME/bin/yarn
       state: present
       create: yes
