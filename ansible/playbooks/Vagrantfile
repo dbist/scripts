@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
   # SHELL
 
   config.vm.provision "ansible" do |ansible|
-     ansible.playbook = "provision/hadoop-playbook.yml"
+     ansible.playbook = "provision/oozie-playbook.yml"
 
     # enable for debugging
     # ansible.verbose = "vvv"
