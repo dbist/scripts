@@ -121,13 +121,23 @@
       - ST4-4.0.4.jar
       - commons-dbcp-1.4.jar
       - commons-net-3.1.jar
-      - openjpa-jdbc-2.4.2.jar
       - commons-exec-1.3.jar
       - commons-configuration-1.6.jar
       - commons-digester-1.8.jar
+      - commons-lang-2.4.jar
       - slf4j-log4j12-1.6.6.jar
       - slf4j-api-1.6.6.jar
       - log4j-1.2.17.jar
+      - openjpa-jdbc-2.4.2.jar
+      - openjpa-lib-2.4.2.jar
+      - openjpa-persistence-2.4.2.jar
+      - openjpa-persistence-jdbc-2.4.2.jar
+      - openjpa-kernel-2.4.2.jar
+      - javax.annotation-api-1.2.jar
+      - javax.inject-1.jar
+      - javax.servlet-api-3.1.0.jar
+      - openjpa-persistence-2.4.2.jar
+      - openjpa-persistence-jdbc-2.4.2.jar
 
   - name: download extjs and place in libext
     get_url:
