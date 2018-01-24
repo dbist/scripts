@@ -10,18 +10,18 @@
   - name: download oozie source release
     git:
       repo: 'https://github.com/apache/oozie.git'
-      dest: "/tmp/{{ oozie_version }}"
+      dest: "/tmp/{{ oozie_branch_version }}"
       force: yes
-      version: "{{ oozie_version }}"
+      version: "{{ oozie_branch_version }}"
 
   - name: compile oozie from source
-    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version }} -DskipTests=true"
+    command: "/tmp/{{ oozie_branch_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version }} -DskipTests=true"
     args:
-      creates: "/tmp/{{ oozie_version }}/distro/target/oozie-5.0.0-beta1-distro.tar.gz"
+      creates: "/tmp/{{ oozie_branch_version }}/distro/target/oozie-{{ oozie_version }}-distro.tar.gz"
 
   - name: change oozie tmp directory ownership
     file:
-      path: "/tmp/{{ oozie_version }}"
+      path: "/tmp/{{ oozie_branch_version }}"
       state: directory
       owner: oozie
       group: oozie
@@ -38,15 +38,15 @@
 
   - name: extract oozie release
     unarchive:
-      src: "/tmp/{{ oozie_version }}/distro/target/oozie-5.0.0-beta1-distro.tar.gz"
+      src: "/tmp/{{ oozie_branch_version }}/distro/target/oozie-{{ oozie_version }}-distro.tar.gz"
       dest: "/opt/oozie/{{ oozie_version }}"
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1"
+      creates: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
 
   - name: change oozie directory ownership
     file:
-      path: "/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1"
+      path: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
       state: directory
       owner: oozie
       group: oozie
@@ -56,7 +56,7 @@
   - name: export OOZIE_HOME
     lineinfile:
       path: /etc/environment
-      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1"
+      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
       state: present
       create: yes
 
@@ -75,69 +75,20 @@
       group: oozie
       mode: 0775
 
+  - name: get jars for libext
+    command: "find /tmp/{{ oozie_branch_version }}/server/target/dependency -type f"
+    register: libext_jars
+
   - name: copy hadoop jars into libext directory
     copy:
-      src: "/tmp/{{ oozie_version }}/server/target/dependency/{{ item }}"
-      dest: "$OOZIE_HOME/libext/{{ item }}"
+      src: "{{ item }}"
+      dest: "$OOZIE_HOME/libext"
       owner: oozie
       group: oozie
       mode: 0775
       remote_src: yes
     with_items:
-      - "hadoop-client-{{ hadoop_version }}.jar"
-      - "hadoop-common-{{ hadoop_version }}.jar"
-      - "hadoop-annotations-{{ hadoop_version }}.jar"
-      - "hadoop-hdfs-{{ hadoop_version }}.jar"
-      - "hadoop-auth-{{ hadoop_version }}.jar"
-      - "hadoop-yarn-api-{{ hadoop_version }}.jar"
-      - "hadoop-yarn-client-{{ hadoop_version }}.jar"
-      - "hadoop-yarn-common-{{ hadoop_version }}.jar"
-      - "hadoop-yarn-server-common-{{ hadoop_version }}.jar"
-      - "hadoop-mapreduce-client-app-{{ hadoop_version }}.jar"
-      - "hadoop-mapreduce-client-common-{{ hadoop_version }}.jar"
-      - "hadoop-mapreduce-client-core-{{ hadoop_version }}.jar"
-      - "hadoop-mapreduce-client-jobclient-{{ hadoop_version }}.jar"
-      - "hadoop-mapreduce-client-shuffle-{{ hadoop_version }}.jar"
-      - oozie-client-5.0.0-beta1.jar
-      - oozie-core-5.0.0-beta1.jar
-      - xercesImpl-2.11.0.jar
-      - xml-apis-1.4.01.jar
-      - xml-apis-ext-1.3.04.jar
-      - guava-11.0.2.jar
-      - commons-collections-3.2.2.jar
-      - commons-codec-1.4.jar
-      - commons-cli-1.2.jar
-      - commons-logging-1.1.jar
-      - derby-10.10.1.1.jar
-      - jcl-over-slf4j-1.7.25.jar
-      - jul-to-slf4j-1.7.25.jar
-      - commons-el-1.0.jar
-      - apache-log4j-extras-1.2.17.jar
-      - apache-jsp-9.2.19.v20160908.jar
-      - apache-jsp-8.0.33.jar
-      - apache-el-8.0.33.jar
-      - apacheds-kerberos-codec-2.0.0-M15.jar
-      - apacheds-i18n-2.0.0-M15.jar
-      - ST4-4.0.4.jar
-      - commons-dbcp-1.4.jar
-      - commons-net-3.1.jar
-      - commons-exec-1.3.jar
-      - commons-configuration-1.6.jar
-      - commons-digester-1.8.jar
-      - commons-lang-2.4.jar
-      - slf4j-log4j12-1.6.6.jar
-      - slf4j-api-1.6.6.jar
-      - log4j-1.2.17.jar
-      - openjpa-jdbc-2.4.2.jar
-      - openjpa-lib-2.4.2.jar
-      - openjpa-persistence-2.4.2.jar
-      - openjpa-persistence-jdbc-2.4.2.jar
-      - openjpa-kernel-2.4.2.jar
-      - javax.annotation-api-1.2.jar
-      - javax.inject-1.jar
-      - javax.servlet-api-3.1.0.jar
-      - openjpa-persistence-2.4.2.jar
-      - openjpa-persistence-jdbc-2.4.2.jar
+      - "{{ libext_jars.stdout_lines }}"
 
   - name: download extjs and place in libext
     get_url:
@@ -146,7 +97,7 @@
 
   - name: change oozie libext directory ownership
     file:
-      path: "/opt/oozie/{{ oozie_version }}/oozie-5.0.0-beta1/libext"
+      path: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}/libext"
       state: directory
       owner: oozie
       group: oozie
