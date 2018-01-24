@@ -103,3 +103,22 @@
       group: oozie
       mode: 0775
       recurse: yes
+
+  - name: add oozie specific core-site.xml properties
+    blockinfile:
+      path: $HADOOP_HOME/etc/hadoop/core-site.xml
+      block: |
+               <!-- OOZIE -->
+               <property>
+                 <name>hadoop.proxyuser.oozie.hosts</name>
+                 <value>{{ ansible_nodename }}</value>
+               </property>
+               <property>
+                 <name>hadoop.proxyuser.oozie.groups</name>
+                 <value>*</value>
+               </property>
+      insertbefore: "</configuration>"
+      backup: yes
+
+  - name: create Oozie db
+    command: $OOZIE_HOME/bin/ooziedb.sh create -sqlfile oozie.sql -run
