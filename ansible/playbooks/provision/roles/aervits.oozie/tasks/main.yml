@@ -7,30 +7,15 @@
       state: latest
     with_items: git, maven, unzip
 
-  - name: download oozie source release
-    git:
-      repo: 'https://github.com/apache/oozie.git'
-      dest: "/tmp/{{ oozie_branch_version }}"
-      force: yes
-      version: "{{ oozie_branch_version }}"
-
-  - name: compile oozie from source
-    command: "/tmp/{{ oozie_branch_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version }} -DskipTests=true"
-    args:
-      creates: "/tmp/{{ oozie_branch_version }}/distro/target/oozie-{{ oozie_version }}-distro.tar.gz"
-
-  - name: change oozie tmp directory ownership
-    file:
-      path: "/tmp/{{ oozie_branch_version }}"
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
-      recurse: yes
+  - name: download oozie release
+    get_url:
+      url: "{{ oozie_tar_url }}"
+      dest: "/tmp/{{ oozie_version }}.tar.gz"
+      checksum: "md5:{{ oozie_md5_sum }}"
 
   - name: create oozie directory
     file:
-      path: "/opt/oozie/{{ oozie_version }}"
+      path: /opt/oozie
       state: directory
       owner: oozie
       group: oozie
@@ -38,25 +23,16 @@
 
   - name: extract oozie release
     unarchive:
-      src: "/tmp/{{ oozie_branch_version }}/distro/target/oozie-{{ oozie_version }}-distro.tar.gz"
-      dest: "/opt/oozie/{{ oozie_version }}"
+      src: "/tmp/{{ oozie_version }}.tar.gz"
+      dest: /opt/oozie
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
+      creates: "/opt/oozie/{{ oozie_version }}"
 
-  - name: change oozie directory ownership
-    file:
-      path: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
-      recurse: yes
-    
   - name: export OOZIE_HOME
     lineinfile:
       path: /etc/environment
-      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
+      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
       state: present
       create: yes
 
@@ -75,20 +51,20 @@
       group: oozie
       mode: 0775
 
-  - name: get jars for libext
-    command: "find /tmp/{{ oozie_branch_version }}/server/target/dependency -type f"
-    register: libext_jars
+#  - name: get jars for libext
+#    command: "find $OOZIE_HOME/server/target/dependency -type f"
+#    register: libext_jars
 
-  - name: copy hadoop jars into libext directory
-    copy:
-      src: "{{ item }}"
-      dest: "$OOZIE_HOME/libext"
-      owner: oozie
-      group: oozie
-      mode: 0775
-      remote_src: yes
-    with_items:
-      - "{{ libext_jars.stdout_lines }}"
+#  - name: copy hadoop jars into libext directory
+#    copy:
+#      src: "{{ item }}"
+#      dest: "$OOZIE_HOME/libext"
+#      owner: oozie
+#      group: oozie
+#      mode: 0775
+#      remote_src: yes
+#    with_items:
+#      - "{{ libext_jars.stdout_lines }}"
 
   - name: download extjs and place in libext
     get_url:
@@ -97,7 +73,7 @@
 
   - name: change oozie libext directory ownership
     file:
-      path: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}/libext"
+      path: "$OOZIE_HOME/libext"
       state: directory
       owner: oozie
       group: oozie

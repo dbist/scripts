@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.oozie
-  oozie_version: "5.0.0-beta1"
-  oozie_branch_version: "branch-{{ oozie_version }}"
-  hadoop_version: 2.7.5
+  oozie_version: "oozie-4.3.1"
+  oozie_tar_url: "http://people.apache.org/~satishsaley/{{ oozie_version }}-rc-2/{{ oozie_version}}.tar.gz"
+  oozie_md5_sum: 35acfc72e49fb080aaaa23d3b590918c
