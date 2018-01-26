@@ -75,6 +75,11 @@
       group: oozie
       mode: 0775
 
+  - name: download extjs and place in libext
+    get_url:
+      url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
+      dest: $OOZIE_HOME/libext
+
   - name: get jars for libext
     command: "find /tmp/{{ oozie_branch_version }}/server/target/dependency -type f"
     register: libext_jars
@@ -89,11 +94,6 @@
       remote_src: yes
     with_items:
       - "{{ libext_jars.stdout_lines }}"
-
-  - name: download extjs and place in libext
-    get_url:
-      url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
-      dest: $OOZIE_HOME/libext
 
   - name: change oozie libext directory ownership
     file:
