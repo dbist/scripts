@@ -78,7 +78,7 @@
   - name: download extjs and place in libext
     get_url:
       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
-      dest: $OOZIE_HOME/libext
+      dest: /tmp/{{ oozie_branch_version }}/server/target/dependency
 
   - name: get jars for libext
     command: "find /tmp/{{ oozie_branch_version }}/server/target/dependency -type f"
