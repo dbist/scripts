@@ -46,6 +46,14 @@
       group: hadoop
       mode: 0755
 
+  - name: create yarn nodemanager local dir directory
+    file:
+      path: /hadoop/yarn/local
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0775
+
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml

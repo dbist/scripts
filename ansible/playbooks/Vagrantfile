@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
   #
   
   config.vm.provider "virtualbox" do |vb|
-     vb.memory = "3072"
+     vb.memory = "9072"
   end
 
   # Display the VirtualBox GUI when booting the machine
