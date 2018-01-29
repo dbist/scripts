@@ -42,11 +42,11 @@
       dest: "/opt/oozie/{{ oozie_version }}"
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
+      creates: "/opt/oozie/{{ oozie_version }}"
 
   - name: change oozie directory ownership
     file:
-      path: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
+      path: "/opt/oozie/{{ oozie_version }}"
       state: directory
       owner: oozie
       group: oozie
@@ -56,7 +56,7 @@
   - name: export OOZIE_HOME
     lineinfile:
       path: /etc/environment
-      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}"
+      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
       state: present
       create: yes
 
@@ -97,7 +97,7 @@
 
   - name: change oozie libext directory ownership
     file:
-      path: "/opt/oozie/{{ oozie_version }}/oozie-{{ oozie_version }}/libext"
+      path: "/opt/oozie/{{ oozie_version }}/libext"
       state: directory
       owner: oozie
       group: oozie
