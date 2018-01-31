@@ -11,7 +11,29 @@
     get_url:
       url: "{{ oozie_tar_url }}"
       dest: "/tmp/{{ oozie_version }}.tar.gz"
-#      checksum: "md5:{{ oozie_md5_sum }}"
+      checksum: "md5:{{ oozie_md5_sum }}"
+
+  - name: extract oozie release
+    unarchive:
+      src: "/tmp/{{ oozie_version }}.tar.gz"
+      dest: /tmp
+      remote_src: yes
+      keep_newer: yes
+      creates: "/tmp/{{ oozie_version }}"
+
+  - name: change oozie tmp directory ownership
+    file:
+      path: "/tmp/{{ oozie_version }}"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+      recurse: yes
+
+  - name: compile oozie from source
+    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Phadoop-2 -Dhadoop.version={{ hadoop_version }} -DskipTests=true -Puber -DtargetJavaVersion=1.8 -DjavaVersion=1.8"
+    args:
+      creates: "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}"
 
   - name: create oozie directory
     file:
@@ -21,13 +43,8 @@
       group: oozie
       mode: 0775
 
-  - name: extract oozie release
-    unarchive:
-      src: "/tmp/{{ oozie_version }}.tar.gz"
-      dest: /opt/oozie
-      remote_src: yes
-      keep_newer: yes
-      creates: "/opt/oozie/{{ oozie_version }}"
+  - name: move compiled oozie to destination
+    command: mv "/tmp/{{ oozie_version }}" /opt/oozie/
 
   - name: export OOZIE_HOME
     lineinfile:
