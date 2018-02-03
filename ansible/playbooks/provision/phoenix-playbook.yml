@@ -1,0 +1,17 @@
+---
+- hosts: all
+  roles:
+    - aervits.jdk
+    - aervits.ssh
+    - aervits.users
+    - aervits.hosts
+    - aervits.hadoop
+    - aervits.hbase
+    - aervits.phoenix
+  remote_user: vagrant
+  become: true
+  vars:
+    usernames:
+       - hbase
+       - hadoop
+       - vagrant
