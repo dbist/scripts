@@ -70,6 +70,14 @@
       group: oozie
       mode: 0775
 
+  - name: create spark-conf directory
+    file:
+      path: "$OOZIE_HOME/conf/spark-conf"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
   - name: download extjs and place in libext
     get_url:
       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
