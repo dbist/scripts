@@ -1,6 +1,6 @@
 ---
 # defaults file for aervits.oozie
-  oozie_rc_version: "oozie-4.3.1-rc3"
+  oozie_rc_version: "oozie-4.3.1-rc4"
   oozie_version: "oozie-4.3.1"
-  oozie_tar_url: "http://people.apache.org/~satishsaley/{{ oozie_rc_version }}/{{ oozie_version }}.tar.gz"
-  oozie_md5_sum: cded058bd7db0ff9e4bb40e0add001aa
+  oozie_tar_url: "http://people.apache.org/~gezapeti/{{ oozie_rc_version }}/{{ oozie_version }}.tar.gz"
+  oozie_md5_sum: aabe4a0d415d2b930a69657338fd5101

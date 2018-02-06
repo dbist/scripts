@@ -5,7 +5,7 @@
     package:
       name: "{{ item }}"
       state: latest
-    with_items: git, maven, unzip
+    with_items: git, maven, unzip, zip
 
   - name: download oozie release
     get_url:
@@ -34,6 +34,8 @@
     command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Phadoop-2 -Dhadoop.version={{ hadoop_version }} -DskipTests=true -Puber -DtargetJavaVersion=1.8 -DjavaVersion=1.8"
     args:
       creates: "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}"
+    become: true
+    become_user: oozie
 
   - name: create oozie directory
     file:
@@ -44,7 +46,7 @@
       mode: 0775
 
   - name: move compiled oozie to destination
-    command: mv "/tmp/{{ oozie_version }}" /opt/oozie/
+    command: mv "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
 
   - name: export OOZIE_HOME
     lineinfile:
@@ -73,6 +75,22 @@
       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
       dest: $OOZIE_HOME/libext
 
+  - name: add oozie specific core-site.xml properties
+    blockinfile:
+      path: $HADOOP_HOME/etc/hadoop/core-site.xml
+      block: |
+               <!-- OOZIE -->
+               <property>
+                 <name>hadoop.proxyuser.oozie.hosts</name>
+                 <value>{{ ansible_nodename }}</value>
+               </property>
+               <property>
+                 <name>hadoop.proxyuser.oozie.groups</name>
+                 <value>*</value>
+               </property>
+      insertbefore: "</configuration>"
+      backup: yes
+
 #  - name: get jars for libext
 #    command: "find $OOZIE_HOME/server/target/dependency -type f"
 #    register: libext_jars
@@ -97,21 +115,5 @@
 #      mode: 0775
 #      recurse: yes
 
-#  - name: add oozie specific core-site.xml properties
-#    blockinfile:
-#      path: $HADOOP_HOME/etc/hadoop/core-site.xml
-#      block: |
-#               <!-- OOZIE -->
-#               <property>
-#                 <name>hadoop.proxyuser.oozie.hosts</name>
-#                 <value>{{ ansible_nodename }}</value>
-#               </property>
-#               <property>
-#                 <name>hadoop.proxyuser.oozie.groups</name>
-#                 <value>*</value>
-#               </property>
-#      insertbefore: "</configuration>"
-#      backup: yes
-#
 #  - name: create Oozie db
 #    command: $OOZIE_HOME/bin/ooziedb.sh create -sqlfile oozie.sql -run
