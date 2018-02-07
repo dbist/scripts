@@ -263,7 +263,7 @@
 
     <property>
       <name>zookeeper.znode.parent</name>
-      <value>/hbase-unsecure</value>
+      <value>/hbase</value>
     </property>
 
   <property>

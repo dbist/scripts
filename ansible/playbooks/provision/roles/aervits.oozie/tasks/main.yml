@@ -117,6 +117,14 @@
                  <name>hadoop.proxyuser.oozie.groups</name>
                  <value>*</value>
                </property>
+               <property>
+                 <name>hadoop.proxyuser.root.hosts</name>
+                 <value>{{ ansible_nodename }}</value>
+               </property>
+               <property>
+                 <name>hadoop.proxyuser.root.groups</name>
+                 <value>*</value>
+               </property>
       insertbefore: "</configuration>"
       backup: yes
 
