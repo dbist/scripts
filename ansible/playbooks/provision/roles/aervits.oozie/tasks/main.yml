@@ -30,6 +30,8 @@
       mode: 0775
       recurse: yes
 
+### does not work as part of Ansible run, only manual so far
+
   - name: compile oozie from source
     command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Phadoop-2 -Dhadoop.version={{ hadoop_version }} -DskipTests=true -Puber -DtargetJavaVersion=1.8 -DjavaVersion=1.8"
     args:
@@ -44,6 +46,8 @@
       owner: oozie
       group: oozie
       mode: 0775
+
+### not indempotant, won't work 2nd time around
 
   - name: move compiled oozie to destination
     command: mv "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
@@ -102,6 +106,22 @@
                </property>
                <property>
                  <name>hadoop.proxyuser.root.groups</name>
+                 <value>*</value>
+               </property>
+      insertbefore: "</configuration>"
+      backup: yes
+
+  - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
+    blockinfile:
+      path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
+      block: |
+               <!-- OOZIE -->
+               <property>
+                 <name>hadoop.proxyuser.oozie.hosts</name>
+                 <value>{{ ansible_nodename }}</value>
+               </property>
+               <property>
+                 <name>hadoop.proxyuser.oozie.groups</name>
                  <value>*</value>
                </property>
       insertbefore: "</configuration>"
