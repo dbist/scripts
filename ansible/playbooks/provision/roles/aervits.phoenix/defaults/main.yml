@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.phoenix
   phoenix_version: "apache-phoenix-5.0.0-alpha-HBase-2.0"
-  phoenix_url: "https://dist.apache.org/repos/dist/dev/phoenix/{{ phoenix_version }}-rc0/bin/{{ phoenix_version }}-bin.tar.gz"
-  phoenix_md5_sum: f2ceba34695324bf55fbf707287afe41
+  phoenix_url: "https://dist.apache.org/repos/dist/dev/phoenix/{{ phoenix_version }}-rc1/bin/{{ phoenix_version }}-bin.tar.gz"
+  phoenix_md5_sum: 361f9b671cdddf9326243afa6fa52d7f
