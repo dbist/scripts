@@ -1,11 +1,6 @@
   <configuration>
     
     <property>
-      <name>capacity-scheduler</name>
-      <value>null</value>
-    </property>
-    
-    <property>
       <name>yarn.scheduler.capacity.default.minimum-user-limit-percent</name>
       <value>100</value>
     </property>

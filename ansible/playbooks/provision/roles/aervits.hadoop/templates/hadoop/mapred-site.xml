@@ -224,7 +224,7 @@
     
     <property>
       <name>yarn.app.mapreduce.am.command-opts</name>
-      <value>-Xmx1223m</value>
+      <value>-Xmx2457m</value>
     </property>
     
     <property>
@@ -234,7 +234,7 @@
     
     <property>
       <name>yarn.app.mapreduce.am.resource.mb</name>
-      <value>1536</value>
+      <value>3072</value>
     </property>
     
     <property>
@@ -244,6 +244,6 @@
     
     <property>
       <name>yarn.app.mapreduce.client.job.max-retries</name>
-      <value>30</value>
+      <value>60</value>
     </property>
 </configuration>
