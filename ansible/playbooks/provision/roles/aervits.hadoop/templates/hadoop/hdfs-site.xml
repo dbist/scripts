@@ -83,11 +83,6 @@
     </property>
 
     <property>
-      <name>dfs.datanode.data.dir</name>
-      <value>/dev/hadoop/hdfs/datanode/1,/dev/hadoop/hdfs/datanode/2,/dev/hadoop/hdfs/datanode/3</value>
-    </property>
-
-    <property>
       <name>dfs.datanode.du.reserved</name>
       <value>10735632896</value>
     </property>
