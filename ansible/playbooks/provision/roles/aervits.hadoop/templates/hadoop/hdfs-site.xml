@@ -255,5 +255,15 @@
       <name>hadoop.caller.context.enabled</name>
       <value>true</value>
     </property>
-    
+
+    <property>
+      <name>dfs.hosts</name>
+      <value></value>
+    </property>
+
+    <property>
+      <name>dfs.hosts.exclude</name>
+      <value></value>
+    </property>
+
 </configuration>
