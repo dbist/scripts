@@ -71,17 +71,22 @@
       <name>dfs.datanode.address</name>
       <value>0.0.0.0:50010</value>
     </property>
-    
+
     <property>
       <name>dfs.datanode.balance.bandwidthPerSec</name>
       <value>6250000</value>
     </property>
-    
+
     <property>
       <name>dfs.datanode.data.dir.perm</name>
       <value>750</value>
     </property>
-    
+
+    <property>
+      <name>dfs.datanode.data.dir</name>
+      <value>/dev/hadoop/hdfs/datanode/1,/dev/hadoop/hdfs/datanode/2,/dev/hadoop/hdfs/datanode/3</value>
+    </property>
+
     <property>
       <name>dfs.datanode.du.reserved</name>
       <value>10735632896</value>
@@ -180,7 +185,7 @@
     
     <property>
       <name>dfs.namenode.handler.count</name>
-      <value>200</value>
+      <value>100</value>
     </property>
     
     <property>
