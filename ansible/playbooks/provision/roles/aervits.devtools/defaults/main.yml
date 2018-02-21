@@ -1,0 +1,5 @@
+---
+# defaults file for aervits.devtools
+  maven_version: "apache-maven-3.5.2"
+  maven_url: "http://ftp.wayne.edu/apache/maven/maven-3/3.5.2/binaries/{{ maven_version }}-bin.tar.gz"
+  maven_md5_sum: 948110de4aab290033c23bf4894f7d9a

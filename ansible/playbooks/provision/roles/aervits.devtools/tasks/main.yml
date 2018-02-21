@@ -1,0 +1,41 @@
+---
+# tasks file for aervits.devtools
+
+  - name: get all required prerequisites
+    package:
+      name: "{{ item }}"
+      state: latest
+    with_items: wget, git, unzip, zip
+
+  - name: download maven release "{{ maven_version }}"
+    get_url:
+      url: "{{ maven_url }}"
+      dest: "/tmp/{{ maven_version }}.bin.tar.gz"
+      checksum: "md5:{{ maven_md5_sum }}"
+
+  - name: create maven directory
+    file:
+      path: /opt/maven
+      state: directory
+
+  - name: extract maven release
+    unarchive:
+      src: "/tmp/{{ maven_version }}.bin.tar.gz"
+      dest: /opt/maven
+      remote_src: yes
+      keep_newer: yes
+      creates: "/opt/maven/{{ maven_version }}"
+
+  - name: export M2_HOME
+    lineinfile:
+      path: /etc/environment
+      line: export M2_HOME="/opt/maven/{{ maven_version }}"
+      state: present
+      create: yes
+
+  - name: alias mvn command
+    lineinfile:
+      path: /etc/bashrc
+      line: alias mvn=$M2_HOME/bin/mvn
+      state: present
+      create: yes
