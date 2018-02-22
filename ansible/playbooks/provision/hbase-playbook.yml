@@ -8,6 +8,8 @@
     - aervits.hadoop
     - aervits.hbase
     - aervits.devtools
+    - aervits.common
+    - aervits.zookeeper
   remote_user: vagrant
   become: true
   vars:
