@@ -1,0 +1,20 @@
+[Unit]
+Description=Apache Zookeeper
+Requires=network.target
+After=network.target
+
+[Service]
+Type=forking
+User={{ zookeeper_user }}
+Group={{ zookeeper_group }}
+ExecStart={{ zookeeper_install_dir }}/bin/zkServer.sh start
+ExecStop={{ zookeeper_install_dir }}/bin/zkServer.sh stop
+ExecReload={{ zookeeper_install_dir }}/bin/zkServer.sh restart
+Environment=JAVA_HOME=/usr/lib/jvm/jre-1.8.0
+Environment=ZOOPIDFILE={{ zookeeper_pid_file }}
+WorkingDirectory={{ zookeeper_data_dir }}
+PIDFile={{ zookeeper_pid_file }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

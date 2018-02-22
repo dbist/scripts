@@ -1,0 +1,12 @@
+---
+# defaults file for aervits.zookeeper
+
+apache_mirror: http://apache.osuosl.org
+zookeeper_version: 3.4.11
+zookeeper_download_url: "{{ apache_mirror }}/zookeeper/zookeeper-{{ zookeeper_version }}/zookeeper-{{ zookeeper_version }}.tar.gz"
+zookeeper_install_dir: /usr/local/zookeeper-{{ zookeeper_version }}
+zookeeper_user: root
+zookeeper_group: root
+zookeeper_data_dir: /var/lib/zookeeper
+zookeeper_log_dir: /var/log/zookeeper
+zookeeper_pid_file: /var/run/zookeeper.pid
