@@ -185,7 +185,7 @@
     
     <property>
       <name>dfs.namenode.name.dir</name>
-      <value>/dev/hadoop/hdfs/namenode</value>
+      <value>file:///dev/hadoop/hdfs/namenode</value>
       <final>true</final>
     </property>
     
