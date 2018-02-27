@@ -155,7 +155,7 @@
     
     <property>
       <name>dfs.namenode.checkpoint.dir</name>
-      <value>/dev/hadoop/hdfs/namesecondary</value>
+      <value>file:///dev/hadoop/hdfs/namesecondary</value>
     </property>
     
     <property>
