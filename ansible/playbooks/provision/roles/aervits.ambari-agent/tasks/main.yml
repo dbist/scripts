@@ -13,12 +13,19 @@
       state: latest
     with_items: ambari-agent, ambari-metrics-hadoop-sink, ambari-logsearch-logfeeder, ambari-infra-solr, ambari-logsearch-portal, ambari-metrics-common, ambari-metrics-grafana, ambari-metrics-monitor, ambari-metrics-collector, ambari-infra-solr-client
 
-  - name: replace the default ambari-agent template with ambari-server name
-    replace:
-      path: /etc/ambari-agent/conf/ambari-agent.ini
-      regexp: 'localhost'
-      replace: "{{ ambari_server_hostname }}"
-      backup: yes
+  - name: stop ambari-agent
+    service:
+      name: ambari-agent
+      state: stopped
+
+
+  # need to add some logic to stop script from doing this every time
+  # creates will only protect in case file doesn't exist
+
+  - name: register ambari-agent hosts with ambari-server
+    command: ambari-agent reset "{{ ambari_server_hostname }}"
+    args:
+#      creates: /etc/ambari-agent/conf/ambari-agent.ini
 
   - name: restart ambari-agent
     service:
