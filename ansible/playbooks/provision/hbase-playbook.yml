@@ -5,10 +5,10 @@
     - aervits.ssh
     - aervits.users
     - aervits.hosts
+    - aervits.common
     - aervits.hadoop
     - aervits.hbase
     - aervits.devtools
-    - aervits.common
   remote_user: vagrant
   become: true
   vars:

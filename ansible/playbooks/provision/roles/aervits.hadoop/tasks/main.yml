@@ -130,3 +130,16 @@
     become_user: hadoop
     args:
       creates: /dev/hadoop/hdfs/namenode1/current/VERSION
+
+# fails due to pexpect module < 3.3 figure out how to install it and then uncomment start script
+
+#  - name: Generic question with multiple different responses
+#    expect:
+#      command: $HADOOP_HOME/sbin/start-dfs.sh
+#      responses:
+#        Question:
+#          - yes
+#          - yes
+#          - yes
+
+#Are you sure you want to continue connecting (yes/no)?

@@ -5,6 +5,7 @@
     - aervits.ssh
     - aervits.users
     - aervits.hosts
+    - aervits.common
     - aervits.hadoop
     - aervits.hbase
     - aervits.phoenix
