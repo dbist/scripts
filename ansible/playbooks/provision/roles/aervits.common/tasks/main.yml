@@ -41,3 +41,10 @@
     regexp: '^vm.swapiness='
     line: vm.swapiness={{ vm_swapiness }}
     backup: yes
+
+# for expect module to work this is required but needs to be at least 3.3 version
+- name: get all required prerequisites
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: pexpect
