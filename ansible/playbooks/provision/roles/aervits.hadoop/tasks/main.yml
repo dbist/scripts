@@ -115,3 +115,18 @@
       line: alias yarn=$HADOOP_HOME/bin/yarn
       state: present
       create: yes
+
+ # move this to users role to avoid duplication in other playbooks, i.e. hadoop, hbase
+ # also not indempotent
+
+  - name: set up passwordless ssh for service user
+    shell: cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
+    become: true
+    become_user: hadoop
+
+  - name: format hdfs
+    shell: $HADOOP_HOME/bin/hdfs namenode -format
+    become: true
+    become_user: hadoop
+    args:
+      creates: /dev/hadoop/hdfs/namenode1/current/VERSION
