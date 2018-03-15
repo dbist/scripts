@@ -38,7 +38,7 @@
       group: hadoop
       mode: 0755
 
-  - name: create datanode short-circuit path directory
+  - name: create directory for yarn.nodemanager.recovery.dir
     file:
       path: /var/log/hadoop-yarn
       state: directory
