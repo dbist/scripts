@@ -1,4 +1,13 @@
 #### execute playbooks
+### Required:
+1. VirtualBox
+2. Vagrant
+3. Ansible
+
+#### as the first step run
+```
+ssh-keygen
+```
 ```
 ansible-playbook ambari-prereqs.yml --private-key=field.pem -f 5 --sudo
 ansible-playbook ambari-agent.yml --private-key=field.pem -f 5 --sudo
