@@ -109,7 +109,7 @@
     
     <property>
       <name>mapreduce.map.java.opts</name>
-      <value>-Xmx1024M</value>
+      <value>-Xmx410M</value>
     </property>
     
     <property>
@@ -119,7 +119,7 @@
     
     <property>
       <name>mapreduce.map.memory.mb</name>
-      <value>1536</value>
+      <value>512</value>
     </property>
     
     <property>
@@ -154,7 +154,7 @@
     
     <property>
       <name>mapreduce.reduce.java.opts</name>
-      <value>-Xmx2560M</value>
+      <value>-Xmx410M</value>
     </property>
     
     <property>
@@ -164,7 +164,7 @@
     
     <property>
       <name>mapreduce.reduce.memory.mb</name>
-      <value>3072</value>
+      <value>512</value>
     </property>
     
     <property>
@@ -224,7 +224,7 @@
     
     <property>
       <name>yarn.app.mapreduce.am.command-opts</name>
-      <value>-Xmx2457M</value>
+      <value>-Xmx410M</value>
     </property>
     
     <property>
@@ -234,7 +234,7 @@
     
     <property>
       <name>yarn.app.mapreduce.am.resource.mb</name>
-      <value>3072</value>
+      <value>512</value>
     </property>
     
     <property>
