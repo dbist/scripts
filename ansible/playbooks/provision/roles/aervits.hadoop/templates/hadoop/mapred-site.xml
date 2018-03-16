@@ -109,7 +109,7 @@
     
     <property>
       <name>mapreduce.map.java.opts</name>
-      <value>-Xmx410M</value>
+      <value>-Xmx410m</value>
     </property>
     
     <property>
@@ -154,7 +154,7 @@
     
     <property>
       <name>mapreduce.reduce.java.opts</name>
-      <value>-Xmx410M</value>
+      <value>-Xmx410m</value>
     </property>
     
     <property>
@@ -214,7 +214,7 @@
     
     <property>
       <name>mapreduce.task.io.sort.mb</name>
-      <value>512</value>
+      <value>256</value>
     </property>
     
     <property>
@@ -224,7 +224,7 @@
     
     <property>
       <name>yarn.app.mapreduce.am.command-opts</name>
-      <value>-Xmx410M</value>
+      <value>-Xmx410m</value>
     </property>
     
     <property>
