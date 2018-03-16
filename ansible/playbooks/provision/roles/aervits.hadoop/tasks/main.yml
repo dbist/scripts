@@ -88,31 +88,31 @@
       mode: 0775
       recurse: yes
 
-  - name: export HADOOP_HOME
+  - name: export HADOOP_PREFIX
     lineinfile:
       path: /etc/environment
-      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
+      line: export HADOOP_PREFIX="/opt/hadoop/{{ hadoop_version  }}"
       state: present
       create: yes
 
   - name: alias hdfs command
     lineinfile:
       path: /etc/bashrc
-      line: alias hdfs=$HADOOP_HOME/bin/hdfs
+      line: alias hdfs=$HADOOP_PREFIX/bin/hdfs
       state: present
       create: yes
 
   - name: alias hadoop command
     lineinfile:
       path: /etc/bashrc
-      line: alias hadoop=$HADOOP_HOME/bin/hadoop
+      line: alias hadoop=$HADOOP_PREFIX/bin/hadoop
       state: present
       create: yes
 
   - name: alias yarn command
     lineinfile:
       path: /etc/bashrc
-      line: alias yarn=$HADOOP_HOME/bin/yarn
+      line: alias yarn=$HADOOP_PREFIX/bin/yarn
       state: present
       create: yes
 
@@ -125,7 +125,7 @@
     become_user: hadoop
 
   - name: format hdfs
-    shell: $HADOOP_HOME/bin/hdfs namenode -format
+    shell: $HADOOP_PREFIX/bin/hdfs namenode -format
     become: true
     become_user: hadoop
     args:
@@ -135,7 +135,7 @@
 
 #  - name: Generic question with multiple different responses
 #    expect:
-#      command: $HADOOP_HOME/sbin/start-dfs.sh
+#      command: $HADOOP_PREFIX/sbin/start-dfs.sh
 #      responses:
 #        Question:
 #          - yes
