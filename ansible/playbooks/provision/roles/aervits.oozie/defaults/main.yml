@@ -1,6 +1,2 @@
 ---
 # defaults file for aervits.oozie
-  oozie_version_short: "4.3"
-  oozie_version: "{{ oozie_version_short }}.1"
-  oozie_branch_version: "branch-{{ oozie_version_short }}"
-  hadoop_version: 2.7.5
