@@ -26,16 +26,7 @@
       keep_newer: yes
       creates: "/opt/maven/{{ maven_version }}"
 
-  - name: export M2_HOME
-    lineinfile:
-      path: /etc/environment
-      line: export M2_HOME="/opt/maven/{{ maven_version }}"
-      state: present
-      create: yes
-
-  - name: alias mvn command
-    lineinfile:
-      path: /etc/bashrc
-      line: alias mvn=$M2_HOME/bin/mvn
-      state: present
-      create: yes
+  - name: add maven bin dir to system-wide $PATH.
+    copy:
+      dest: /etc/profile.d/maven-path.sh
+      content: 'PATH=$PATH:/opt/maven/{{ maven_version }}/bin'
