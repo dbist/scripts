@@ -4,6 +4,17 @@
 2. Vagrant
 3. Ansible
 
+#### Download and add centos/7 box, support for other OS can be added later
+```
+vagrant box add centos/7 https://app.vagrantup.com/centos/boxes/7
+```
+
+#### install ansible
+```
+sudo easy_install pip
+sudo pip install ansible
+```
+
 #### as the first step run
 ```
 ssh-keygen
