@@ -1,12 +1,6 @@
 ---
 # tasks file for aervits.oozie
 
-  - name: get all required prerequisites
-    package:
-      name: "{{ item }}"
-      state: latest
-    with_items: git, maven, unzip, zip
-
   - name: download oozie release
     get_url:
       url: "{{ oozie_tar_url }}"
@@ -32,12 +26,12 @@
 
 ## does not work as part of Ansible run, only manual so far
 
-#  - name: compile oozie from source
-#    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version }} -DskipTests=true -Puber -DtargetJavaVersion=1.8 -DjavaVersion=1.8"
-#    args:
-#      creates: "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}"
-#    become: true
-#    become_user: oozie
+  - name: compile oozie from source
+    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version_short }} -DskipTests=true -Puber"
+    args:
+      creates: "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}"
+    become: true
+    become_user: oozie
 
   - name: create oozie directory
     file:
