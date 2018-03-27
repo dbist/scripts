@@ -47,7 +47,7 @@
       group: oozie
       mode: 0775
 
-### not indempotant, won't work 2nd time around
+### not indempotent, won't work 2nd time around
 
   - name: copy compiled oozie to destination
     command: cp -r "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
@@ -74,14 +74,6 @@
       group: oozie
       mode: 0775
 
-  - name: create spark-conf directory
-    file:
-      path: "$OOZIE_HOME/conf/spark-conf"
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
-
   - name: download extjs and place in libext
     get_url:
       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
@@ -103,14 +95,23 @@
       insertbefore: "</configuration>"
       backup: yes
 
-  - name: change oozie libext directory ownership
+  - name: change oozie directory ownership
     file:
-      path: "$OOZIE_HOME/libext"
+      path: $OOZIE_HOME
       state: directory
       owner: oozie
       group: oozie
       mode: 0775
-      recurse: yes      
+      recurse: yes
+
+        #
+        # - name: create spark-conf directory
+        #   file:
+        #     path: "$OOZIE_HOME/conf/spark-conf"
+        #     state: directory
+        #     owner: oozie
+        #     group: oozie
+        #     mode: 0775
 
 #  - name: get jars for libext
 #    command: "find /tmp/{{ oozie_version }}/server/target/dependency -type f"
