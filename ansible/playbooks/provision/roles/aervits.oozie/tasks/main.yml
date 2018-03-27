@@ -11,7 +11,7 @@
     get_url:
       url: "{{ oozie_tar_url }}"
       dest: "/tmp/{{ oozie_version }}.tar.gz"
-      checksum: "md5:{{ oozie_md5_sum }}"
+      checksum: "sha512:{{ oozie_sha_sum }}"
 
   - name: extract oozie release
     unarchive:
