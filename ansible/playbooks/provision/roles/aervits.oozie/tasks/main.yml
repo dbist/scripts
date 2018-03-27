@@ -1,6 +1,14 @@
 ---
 # tasks file for aervits.oozie
 
+# remove maven from tasks as devtools cookbook takes care of it
+# problem today is that bin/mkdistro.sh doesn't find mvn and fails
+#  - name: get all required prerequisites
+#    package:
+#      name: "{{ item }}"
+#      state: latest
+#    with_items: maven
+
   - name: download oozie release
     get_url:
       url: "{{ oozie_tar_url }}"
