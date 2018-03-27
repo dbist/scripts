@@ -1,0 +1,55 @@
+---
+# tasks file for aervits.phoenix
+  - name: download phoenix release
+    get_url:
+      url: "{{ phoenix_url }}"
+      dest: "/tmp/{{ phoenix_version }}.bin.tar.gz"
+      checksum: "md5:{{ phoenix_md5_sum }}"
+
+  - name: create phoenix directory
+    file:
+      path: /opt/phoenix
+      state: directory
+      owner: hbase
+      group: hbase
+      mode: 0775
+
+  - name: extract phoenix release
+    unarchive:
+      src: "/tmp/{{ phoenix_version }}.bin.tar.gz"
+      dest: /opt/phoenix
+      remote_src: yes
+      keep_newer: yes
+      creates: "/opt/phoenix/{{ phoenix_version }}-bin"
+
+  - name: export PHOENIX_HOME
+    lineinfile:
+      path: /etc/environment
+      line: export PHOENIX_HOME="/opt/phoenix/{{ phoenix_version }}-bin"
+      state: present
+      create: yes
+
+  - name: copy phoenix jar to hbase directory
+    copy:
+      src: "/opt/phoenix/{{ phoenix_version }}-bin/phoenix-5.0.0-alpha-HBase-2.0-server.jar"
+      dest: "$HBASE_HOME/lib"
+      owner: hbase
+      group: hbase
+      mode: 0775
+      remote_src: yes
+  
+  - name: add phoenix specific hbase-site.xml properties
+    blockinfile:
+      path: $HBASE_HOME/conf/hbase-site.xml
+      block: |
+               <!-- PHOENIX -->
+               <property>
+                 <name>hbase.defaults.for.version.skip</name>
+                 <value>true</value>
+               </property>
+               <property>
+                 <name>hbase.regionserver.wal.codec</name>
+                 <value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
+               </property>
+      insertbefore: "</configuration>"
+      backup: yes

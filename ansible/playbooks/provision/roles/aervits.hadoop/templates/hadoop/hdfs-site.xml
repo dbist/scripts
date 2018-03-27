@@ -71,17 +71,17 @@
       <name>dfs.datanode.address</name>
       <value>0.0.0.0:50010</value>
     </property>
-    
+
     <property>
       <name>dfs.datanode.balance.bandwidthPerSec</name>
       <value>6250000</value>
     </property>
-    
+
     <property>
       <name>dfs.datanode.data.dir.perm</name>
       <value>750</value>
     </property>
-    
+
     <property>
       <name>dfs.datanode.du.reserved</name>
       <value>10735632896</value>
@@ -155,7 +155,7 @@
     
     <property>
       <name>dfs.namenode.checkpoint.dir</name>
-      <value>/dev/hadoop/hdfs/namesecondary</value>
+      <value>file:///dev/hadoop/hdfs/namesecondary</value>
     </property>
     
     <property>
@@ -180,12 +180,12 @@
     
     <property>
       <name>dfs.namenode.handler.count</name>
-      <value>200</value>
+      <value>100</value>
     </property>
     
     <property>
       <name>dfs.namenode.name.dir</name>
-      <value>/dev/hadoop/hdfs/namenode</value>
+      <value>file:///dev/hadoop/hdfs/namenode1,file:///dev/hadoop/hdfs/namenode2</value>
       <final>true</final>
     </property>
     
@@ -250,5 +250,20 @@
       <name>hadoop.caller.context.enabled</name>
       <value>true</value>
     </property>
-    
+
+    <property>
+      <name>dfs.hosts</name>
+      <value></value>
+    </property>
+
+    <property>
+      <name>dfs.hosts.exclude</name>
+      <value></value>
+    </property>
+
+    <property>
+      <name>dfs.datanode.directoryscan.throttle.limit.ms.per.sec</name>
+      <value>1000</value>
+    </property>
+
 </configuration>

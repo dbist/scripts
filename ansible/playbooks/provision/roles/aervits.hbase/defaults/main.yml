@@ -1,5 +1,2 @@
 ---
 # defaults file for aervits.hbase
-  hbase_version: "hbase-2.0.0-beta-1"
-  hbase_url: http://www.trieuvan.com/apache/hbase/hbase-2.0.0-beta-1/hbase-2.0.0-beta-1-bin.tar.gz
-  hbase_md5_sum: 47686149842A82C683F2686463813645

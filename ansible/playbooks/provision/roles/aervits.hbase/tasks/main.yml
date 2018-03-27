@@ -4,7 +4,7 @@
     get_url:
       url: "{{ hbase_url }}"
       dest: "/tmp/{{ hbase_version }}.bin.tar.gz"
-      checksum: "md5:{{ hbase_md5_sum }}"
+      checksum: "sha512:{{ hbase_sha_sum }}"
 
   - name: create hbase directory
     file:
@@ -63,3 +63,10 @@
       line: export HADOOP_CLASSPATH=`hbase classpath`
       state: present
       create: yes
+
+ # move this to users role to avoid duplication in other playbooks, i.e. hadoop, hbase
+
+  - name: set up passwordless ssh for service user
+    shell: cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
+    become: true
+    become_user: hbase

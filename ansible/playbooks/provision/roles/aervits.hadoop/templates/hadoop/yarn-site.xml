@@ -294,11 +294,6 @@
     </property>
     
     <property>
-      <name>yarn.resourcemanager.nodes.exclude-path</name>
-      <value>/etc/hadoop/conf/yarn.exclude</value>
-    </property>
-    
-    <property>
       <name>yarn.resourcemanager.resource-tracker.address</name>
       <value>{{ ansible_nodename }}:8025</value>
     </property>
@@ -380,7 +375,7 @@
     
     <property>
       <name>yarn.scheduler.minimum-allocation-mb</name>
-      <value>1024</value>
+      <value>256</value>
     </property>
     
     <property>

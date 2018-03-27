@@ -1,0 +1,50 @@
+---
+# tasks file for aervits.common
+
+# copied from https://github.com/jfrazee/ansible-nifi-kafka
+
+- name: set nofile ulimit to {{ pam_limits_nofile }}
+  pam_limits:
+    domain: '*'
+    limit_type: "{{ item }}"
+    limit_item: nofile
+    value: "{{ pam_limits_nofile }}"
+    use_max: yes
+    backup: yes
+  with_items:
+    - hard
+    - soft
+
+- name: set nproc ulimit to {{ pam_limits_nproc }}
+  pam_limits:
+    domain: '*'
+    limit_type: "{{ item }}"
+    limit_item: nproc
+    value: "{{ pam_limits_nproc }}"
+    use_max: yes
+    backup: yes
+  with_items:
+    - hard
+    - soft
+
+- name: set net.ipv4.ip_local_port_range={{ net_ipv4_ip_local_port_range }}
+  sysctl:
+    name: net.ipv4.ip_local_port_range
+    value: "{{ net_ipv4_ip_local_port_range }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: set vm.swapiness={{ vm_swapiness }}
+  lineinfile:
+    dest: /etc/sysctl.conf
+    regexp: '^vm.swapiness='
+    line: vm.swapiness={{ vm_swapiness }}
+    backup: yes
+
+# for expect module to work this is required but needs to be at least 3.3 version
+- name: get all required prerequisites
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: pexpect

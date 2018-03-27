@@ -1,0 +1,71 @@
+---
+# tasks file for aervits.zookeeper
+
+# taken from https://github.com/jfrazee/ansible-nifi-kafka
+
+# tasks file for zookeeper
+- name: download and unarchive zookeeper-{{ zookeeper_version }}
+  unarchive:
+    src: "{{ zookeeper_download_url }}"
+    dest: "{{ zookeeper_install_dir | dirname }}"
+    creates: "{{ zookeeper_install_dir }}"
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    remote_src: yes
+
+- name: mkdir {{ zookeeper_data_dir }}
+  file:
+    path: "{{ zookeeper_data_dir }}"
+    state: directory
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    mode: 0775
+
+- name: mkdir {{ zookeeper_log_dir }}
+  file:
+    path: "{{ zookeeper_log_dir }}"
+    state: directory
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    mode: 0775
+
+- name: create {{ zookeeper_install_dir }}/conf/zoo.cfg
+  template:
+    src: zoo.cfg.j2
+    dest: "{{ zookeeper_install_dir }}/conf/zoo.cfg"
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    mode: 0644
+
+- name: set zookeeper.log.dir to {{ zookeeper_log_dir }} in {{ zookeeper_install_dir }}/conf/log4j.properties
+  lineinfile:
+    dest: "{{ zookeeper_install_dir }}/conf/log4j.properties"
+    regexp: '^zookeeper\.log\.dir=.*'
+    line: zookeeper.log.dir={{ zookeeper_log_dir }}
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    backup: yes
+
+- name: create {{ zookeeper_data_dir }}/myid
+  template:
+    src: myid.j2
+    dest: "{{ zookeeper_data_dir }}/myid"
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    mode: 0644
+
+#- name: create /etc/systemd/system/zookeeper.service
+#  template:
+#    src: zookeeper.service.j2
+#    dest: /etc/systemd/system/zookeeper.service
+#    owner: root
+#    group: root
+#    mode: 0644
+#  notify: start zookeeper
+
+#- name: start zookeeper
+#  systemd:
+#    name: zookeeper
+#    state: started
+#    enabled: yes
+#    daemon_reload: yes

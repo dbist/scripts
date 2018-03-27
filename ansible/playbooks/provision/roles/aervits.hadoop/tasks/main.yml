@@ -46,6 +46,14 @@
       group: hadoop
       mode: 0755
 
+  - name: create yarn nodemanager local dir directory
+    file:
+      path: /hadoop/yarn/local
+      state: directory
+      owner: hadoop
+      group: hadoop
+      mode: 0775
+
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml
@@ -80,30 +88,58 @@
       mode: 0775
       recurse: yes
 
-  - name: export HADOOP_HOME
+  - name: export HADOOP_PREFIX
     lineinfile:
       path: /etc/environment
-      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
+      line: export HADOOP_PREFIX="/opt/hadoop/{{ hadoop_version  }}"
       state: present
       create: yes
 
   - name: alias hdfs command
     lineinfile:
       path: /etc/bashrc
-      line: alias hdfs=$HADOOP_HOME/bin/hdfs
+      line: alias hdfs=$HADOOP_PREFIX/bin/hdfs
       state: present
       create: yes
 
   - name: alias hadoop command
     lineinfile:
       path: /etc/bashrc
-      line: alias hadoop=$HADOOP_HOME/bin/hadoop
+      line: alias hadoop=$HADOOP_PREFIX/bin/hadoop
       state: present
       create: yes
 
   - name: alias yarn command
     lineinfile:
       path: /etc/bashrc
-      line: alias yarn=$HADOOP_HOME/bin/yarn
+      line: alias yarn=$HADOOP_PREFIX/bin/yarn
       state: present
       create: yes
+
+ # move this to users role to avoid duplication in other playbooks, i.e. hadoop, hbase
+ # also not indempotent
+
+  - name: set up passwordless ssh for service user
+    shell: cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
+    become: true
+    become_user: hadoop
+
+  - name: format hdfs
+    shell: $HADOOP_PREFIX/bin/hdfs namenode -format
+    become: true
+    become_user: hadoop
+    args:
+      creates: /dev/hadoop/hdfs/namenode1/current/VERSION
+
+# fails due to pexpect module < 3.3 figure out how to install it and then uncomment start script
+
+#  - name: Generic question with multiple different responses
+#    expect:
+#      command: $HADOOP_PREFIX/sbin/start-dfs.sh
+#      responses:
+#        Question:
+#          - yes
+#          - yes
+#          - yes
+
+#Are you sure you want to continue connecting (yes/no)?

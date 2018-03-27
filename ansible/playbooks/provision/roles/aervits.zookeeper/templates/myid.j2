@@ -1,0 +1,5 @@
+{% for host in play_hosts %}
+{% if inventory_hostname == host %}
+{{ loop.index }}
+{% endif %}
+{% endfor %}
