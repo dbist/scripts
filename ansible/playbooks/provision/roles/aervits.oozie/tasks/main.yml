@@ -32,8 +32,11 @@
       mode: 0775
       recurse: yes
 
+# fails due You must specify a valid lifecycle phase or a goal in the format in Oozie main
   - name: compile oozie from source
     shell: mvn clean install -DskipTests -Dhadoop.version={{ hadoop_version_short }}
+    register: result
+    ignore_errors: True
     args:
       chdir: "/tmp/{{ oozie_version }}/"
       executable: /usr/bin/mvn
@@ -49,96 +52,97 @@
 #    become: true
 #    become_user: oozie
 
-################################################ new stuff may need to keep ##################
-#   - name: create oozie directory
-#     file:
-#       path: /opt/oozie
-#       state: directory
-#       owner: oozie
-#       group: oozie
-#       mode: 0775
-#
-# ### not indempotent, won't work 2nd time around
-#
-#   - name: copy compiled oozie to destination
-#     command: cp -r "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
-#
-#   - name: export OOZIE_HOME
-#     lineinfile:
-#       path: /etc/environment
-#       line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
-#       state: present
-#       create: yes
-#
-#   - name: alias oozie command
-#     lineinfile:
-#       path: /etc/bashrc
-#       line: alias oozie=$OOZIE_HOME/bin/oozie
-#       state: present
-#       create: yes
-#
-#   - name: create libext directory
-#     file:
-#       path: "$OOZIE_HOME/libext"
-#       state: directory
-#       owner: oozie
-#       group: oozie
-#       mode: 0775
-#
-#   - name: download extjs and place in libext
-#     get_url:
-#       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
-#       dest: $OOZIE_HOME/libext
-#
-#   - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
-#     blockinfile:
-#       path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
-#       block: |
-#                <!-- OOZIE -->
-#                <property>
-#                  <name>hadoop.proxyuser.oozie.hosts</name>
-#                  <value>{{ ansible_nodename }}</value>
-#                </property>
-#                <property>
-#                  <name>hadoop.proxyuser.oozie.groups</name>
-#                  <value>*</value>
-#                </property>
-#       insertbefore: "</configuration>"
-#       backup: yes
-#
-#   - name: add oozie specific core-site.xml properties
-#     blockinfile:
-#       path: $HADOOP_HOME/etc/hadoop/core-site.xml
-#       block: |
-#               <!-- OOZIE -->
-#               <property>
-#                 <name>hadoop.proxyuser.oozie.hosts</name>
-#                 <value>{{ ansible_nodename }}</value>
-#               </property>
-#               <property>
-#                 <name>hadoop.proxyuser.oozie.groups</name>
-#                 <value>*</value>
-#               </property>
-#               <property>
-#       insertbefore: "</configuration>"
-#       backup: yes
-#
-#   - name: create spark-conf directory
-#     file:
-#       path: "$OOZIE_HOME/conf/spark-conf"
-#       state: directory
-#       owner: oozie
-#       group: oozie
-#       mode: 0775
-#
-#   - name: change oozie directory ownership
-#     file:
-#       path: $OOZIE_HOME
-#       state: directory
-#       owner: oozie
-#       group: oozie
-#       mode: 0775
-#       recurse: yes
+  - name: create oozie directory
+    file:
+      path: /opt/oozie
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
+  - name: copy compiled oozie to destination
+    shell: cp -r "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
+    args:
+      creates: /opt/oozie/{{ oozie_version }}
+    when: result is succeeded
+
+  - name: export OOZIE_HOME
+    lineinfile:
+      path: /etc/environment
+      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
+      state: present
+      create: yes
+
+  - name: alias oozie command
+    lineinfile:
+      path: /etc/bashrc
+      line: alias oozie=$OOZIE_HOME/bin/oozie
+      state: present
+      create: yes
+
+  - name: create libext directory
+    file:
+      path: "$OOZIE_HOME/libext"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
+  - name: download extjs and place in libext
+    get_url:
+      url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
+      dest: $OOZIE_HOME/libext
+
+# does not work until compilation is succeeded, include manually in the VM
+  # - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
+  #   blockinfile:
+  #     path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
+  #     block: |
+  #              <!-- OOZIE -->
+  #              <property>
+  #                <name>hadoop.proxyuser.oozie.hosts</name>
+  #                <value>{{ ansible_nodename }}</value>
+  #              </property>
+  #              <property>
+  #                <name>hadoop.proxyuser.oozie.groups</name>
+  #                <value>*</value>
+  #              </property>
+  #     insertbefore: "</configuration>"
+  #     backup: yes
+
+  - name: add oozie specific core-site.xml properties
+    blockinfile:
+      path: $HADOOP_PREFIX/etc/hadoop/core-site.xml
+      block: |
+              <!-- OOZIE -->
+              <property>
+                <name>hadoop.proxyuser.oozie.hosts</name>
+                <value>{{ ansible_nodename }}</value>
+              </property>
+              <property>
+                <name>hadoop.proxyuser.oozie.groups</name>
+                <value>*</value>
+              </property>
+              <property>
+      insertbefore: "</configuration>"
+      backup: yes
+
+  - name: create spark-conf directory
+    file:
+      path: "$OOZIE_HOME/conf/spark-conf"
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
+  - name: change oozie directory ownership
+    file:
+      path: $OOZIE_HOME
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+      recurse: yes
 
 #################################### old stuff below may not need ########################
 
