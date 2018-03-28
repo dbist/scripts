@@ -30,3 +30,9 @@
     copy:
       dest: /etc/profile.d/maven-path.sh
       content: 'PATH=$PATH:/opt/maven/{{ maven_version }}/bin'
+
+  - name: alternatives link for maven
+    alternatives:
+      name: mvn
+      link: /usr/bin/mvn
+      path: /opt/maven/{{ maven_version }}/bin/mvn

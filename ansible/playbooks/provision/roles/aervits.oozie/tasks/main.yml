@@ -23,7 +23,7 @@
       keep_newer: yes
       creates: "/tmp/{{ oozie_version }}"
 
-  - name: change oozie tmp directory ownership
+  - name: change oozie tmp directory ownership for compile
     file:
       path: "/tmp/{{ oozie_version }}"
       state: directory
@@ -32,88 +32,115 @@
       mode: 0775
       recurse: yes
 
-## does not work as part of Ansible run, only manual so far
-
   - name: compile oozie from source
-    command: "/tmp/{{ oozie_version }}/bin/mkdistro.sh -Dhadoop.version={{ hadoop_version_short }} -DskipTests=true -Puber"
+    shell: mvn clean install -DskipTests -Dhadoop.version={{ hadoop_version_short }}
     args:
-      creates: "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}"
+      chdir: "/tmp/{{ oozie_version }}/"
+      executable: /usr/bin/mvn
     become: true
     become_user: oozie
 
-  - name: create oozie directory
-    file:
-      path: /opt/oozie
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
+# this currently does not work
+#  - name: compile oozie from source
+#    command: bin/mkdistro.sh -Dhadoop.version={{ hadoop_version_short }} -DskipTests -Puber -DgenerateDocs
+#    args:
+#      creates: "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}"
+#      chdir: "/tmp/{{ oozie_version }}/"
+#    become: true
+#    become_user: oozie
 
-### not indempotent, won't work 2nd time around
+################################################ new stuff may need to keep ##################
+#   - name: create oozie directory
+#     file:
+#       path: /opt/oozie
+#       state: directory
+#       owner: oozie
+#       group: oozie
+#       mode: 0775
+#
+# ### not indempotent, won't work 2nd time around
+#
+#   - name: copy compiled oozie to destination
+#     command: cp -r "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
+#
+#   - name: export OOZIE_HOME
+#     lineinfile:
+#       path: /etc/environment
+#       line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
+#       state: present
+#       create: yes
+#
+#   - name: alias oozie command
+#     lineinfile:
+#       path: /etc/bashrc
+#       line: alias oozie=$OOZIE_HOME/bin/oozie
+#       state: present
+#       create: yes
+#
+#   - name: create libext directory
+#     file:
+#       path: "$OOZIE_HOME/libext"
+#       state: directory
+#       owner: oozie
+#       group: oozie
+#       mode: 0775
+#
+#   - name: download extjs and place in libext
+#     get_url:
+#       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
+#       dest: $OOZIE_HOME/libext
+#
+#   - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
+#     blockinfile:
+#       path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
+#       block: |
+#                <!-- OOZIE -->
+#                <property>
+#                  <name>hadoop.proxyuser.oozie.hosts</name>
+#                  <value>{{ ansible_nodename }}</value>
+#                </property>
+#                <property>
+#                  <name>hadoop.proxyuser.oozie.groups</name>
+#                  <value>*</value>
+#                </property>
+#       insertbefore: "</configuration>"
+#       backup: yes
+#
+#   - name: add oozie specific core-site.xml properties
+#     blockinfile:
+#       path: $HADOOP_HOME/etc/hadoop/core-site.xml
+#       block: |
+#               <!-- OOZIE -->
+#               <property>
+#                 <name>hadoop.proxyuser.oozie.hosts</name>
+#                 <value>{{ ansible_nodename }}</value>
+#               </property>
+#               <property>
+#                 <name>hadoop.proxyuser.oozie.groups</name>
+#                 <value>*</value>
+#               </property>
+#               <property>
+#       insertbefore: "</configuration>"
+#       backup: yes
+#
+#   - name: create spark-conf directory
+#     file:
+#       path: "$OOZIE_HOME/conf/spark-conf"
+#       state: directory
+#       owner: oozie
+#       group: oozie
+#       mode: 0775
+#
+#   - name: change oozie directory ownership
+#     file:
+#       path: $OOZIE_HOME
+#       state: directory
+#       owner: oozie
+#       group: oozie
+#       mode: 0775
+#       recurse: yes
 
-  - name: copy compiled oozie to destination
-    command: cp -r "/tmp/{{ oozie_version }}/distro/target/{{ oozie_version }}-distro/{{ oozie_version }}" /opt/oozie/
-
-  - name: export OOZIE_HOME
-    lineinfile:
-      path: /etc/environment
-      line: export OOZIE_HOME="/opt/oozie/{{ oozie_version }}"
-      state: present
-      create: yes
-
-  - name: alias oozie command
-    lineinfile:
-      path: /etc/bashrc
-      line: alias oozie=$OOZIE_HOME/bin/oozie
-      state: present
-      create: yes
-
-  - name: create libext directory
-    file:
-      path: "$OOZIE_HOME/libext"
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
-
-  - name: download extjs and place in libext
-    get_url:
-      url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
-      dest: $OOZIE_HOME/libext
-
-  - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
-    blockinfile:
-      path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
-      block: |
-               <!-- OOZIE -->
-               <property>
-                 <name>hadoop.proxyuser.oozie.hosts</name>
-                 <value>{{ ansible_nodename }}</value>
-               </property>
-               <property>
-                 <name>hadoop.proxyuser.oozie.groups</name>
-                 <value>*</value>
-               </property>
-      insertbefore: "</configuration>"
-      backup: yes
-
-  - name: change oozie directory ownership
-    file:
-      path: $OOZIE_HOME
-      state: directory
-      owner: oozie
-      group: oozie
-      mode: 0775
-      recurse: yes
-
-        #
-        # - name: create spark-conf directory
-        #   file:
-        #     path: "$OOZIE_HOME/conf/spark-conf"
-        #     state: directory
-        #     owner: oozie
-        #     group: oozie
-        #     mode: 0775
+#################################### old stuff below may not need ########################
 
 #  - name: get jars for libext
 #    command: "find /tmp/{{ oozie_version }}/server/target/dependency -type f"
