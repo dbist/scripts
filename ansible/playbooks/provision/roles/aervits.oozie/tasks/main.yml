@@ -123,7 +123,6 @@
                 <name>hadoop.proxyuser.oozie.groups</name>
                 <value>*</value>
               </property>
-              <property>
       insertbefore: "</configuration>"
       backup: yes
 
