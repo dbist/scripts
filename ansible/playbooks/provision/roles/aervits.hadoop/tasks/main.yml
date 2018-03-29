@@ -133,13 +133,18 @@
 
 # fails due to pexpect module < 3.3 figure out how to install it and then uncomment start script
 
-#  - name: Generic question with multiple different responses
-#    expect:
-#      command: $HADOOP_PREFIX/sbin/start-dfs.sh
-#      responses:
-#        Question:
-#          - yes
-#          - yes
-#          - yes
+  - name: start namenode, datanode, secondarynamenode
+    expect:
+      command: /opt/hadoop/{{ hadoop_version }}/sbin/start-dfs.sh
+      responses:
+          'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
+    become: true
+    become_user: hadoop
 
-#Are you sure you want to continue connecting (yes/no)?
+  - name: start resourcemanager, nodemanager
+    expect:
+      command: /opt/hadoop/{{ hadoop_version }}/sbin/start-yarn.sh
+      responses:
+          'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
+    become: true
+    become_user: hadoop
