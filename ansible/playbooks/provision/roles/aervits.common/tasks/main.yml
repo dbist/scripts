@@ -42,9 +42,18 @@
     line: vm.swapiness={{ vm_swapiness }}
     backup: yes
 
-# for expect module to work this is required but needs to be at least 3.3 version
-- name: get all required prerequisites
+# can this be consolidated? epel-release must come first, then python-pip
+- name: install epel-release for python-pip package
   package:
     name: "{{ item }}"
     state: latest
-  with_items: pexpect
+  with_items: epel-release
+
+- name: install python-pip for pexpect module as CentOS gets you pexpect <= 3.3
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: python-pip
+
+- name: install pexpect from pip
+  shell: pip install pexpect
