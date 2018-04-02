@@ -93,22 +93,35 @@
       url: http://archive.cloudera.com/gplextras/misc/ext-2.2.zip
       dest: $OOZIE_HOME/libext
 
-# does not work until compilation is succeeded, include manually in the VM
-  # - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
-  #   blockinfile:
-  #     path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
-  #     block: |
-  #              <!-- OOZIE -->
-  #              <property>
-  #                <name>hadoop.proxyuser.oozie.hosts</name>
-  #                <value>{{ ansible_nodename }}</value>
-  #              </property>
-  #              <property>
-  #                <name>hadoop.proxyuser.oozie.groups</name>
-  #                <value>*</value>
-  #              </property>
-  #     insertbefore: "</configuration>"
-  #     backup: yes
+# (workaround until compilation works)
+  - name: create core-site.xml directory in oozie directory
+    file:
+      path: $OOZIE_HOME/conf/hadoop-conf
+      state: directory
+      owner: oozie
+      group: oozie
+      mode: 0775
+
+  - name: configure core-site.xml
+    template:
+      src: templates/core-site.xml
+      dest: "$OOZIE_HOME/conf/hadoop-conf/core-site.xml"
+
+  - name: add oozie specific core-site.xml properties in oozie hadoop-conf dir
+    blockinfile:
+      path: $OOZIE_HOME/conf/hadoop-conf/core-site.xml
+      block: |
+               <!-- OOZIE -->
+               <property>
+                 <name>hadoop.proxyuser.oozie.hosts</name>
+                 <value>{{ ansible_nodename }}</value>
+               </property>
+               <property>
+                 <name>hadoop.proxyuser.oozie.groups</name>
+                 <value>*</value>
+               </property>
+      insertbefore: "</configuration>"
+      backup: yes
 
   - name: add oozie specific core-site.xml properties
     blockinfile:
@@ -142,6 +155,11 @@
       group: oozie
       mode: 0775
       recurse: yes
+
+  - name: configure oozie-site.xml
+    template:
+      src: templates/oozie-site.xml
+      dest: "$OOZIE_HOME/conf/oozie-site.xml"
 
 #################################### old stuff below may not need ########################
 

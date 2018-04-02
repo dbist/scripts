@@ -1,84 +1,142 @@
-  <configuration>
-    
+<configuration>
+
     <property>
       <name>oozie.action.retry.interval</name>
       <value>30</value>
     </property>
-    
+
     <property>
       <name>oozie.authentication.simple.anonymous.allowed</name>
       <value>true</value>
     </property>
-    
+
     <property>
       <name>oozie.authentication.type</name>
       <value>simple</value>
     </property>
-    
+
     <property>
       <name>oozie.base.url</name>
       <value>{{ ansible_nodename }}:11000/oozie</value>
     </property>
-    
+
     <property>
       <name>oozie.credentials.credentialclasses</name>
       <value>hcat=org.apache.oozie.action.hadoop.HCatCredentials,hive2=org.apache.oozie.action.hadoop.Hive2Credentials</value>
     </property>
-    
-    <property>
+
+<property>
       <name>oozie.db.schema.name</name>
       <value>oozie</value>
     </property>
-    
+
     <property>
-      <name>oozie.service.AuthorizationService.security.enabled</name>
-      <value>true</value>
+        <name>oozie.service.AuthorizationService.authorization.enabled</name>
+        <value>false</value>
+        <description>
+            Specifies whether security (user name/admin role) is enabled or not.
+            If disabled any user can manage Oozie system and manage any job.
+        </description>
     </property>
-    
+
     <property>
       <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
-      <value>*=/opt/oozie/{{ oozie_version }}/conf</value>
+      <value>*=hadoop-conf</value>
     </property>
-    
+
+<property>
+        <name>oozie.service.HadoopAccessorService.action.configurations</name>
+        <value>*=action-conf</value>
+        <description>
+            Comma separated AUTHORITY=ACTION_CONF_DIR, where AUTHORITY is the HOST:PORT of
+            the Hadoop MapReduce service (JobTracker, YARN). The wildcard '*' configuration is
+            used when there is no exact match for an authority. The ACTION_CONF_DIR may contain
+            ACTION.xml files where ACTION is the action type ('java', 'map-reduce', 'pig',
+            'hive', 'sqoop', etc.). If the ACTION.xml file exists, its properties will be used
+            as defaults properties for the action. If the path is relative is looked within
+            the Oozie configuration directory; though the path can be absolute (i.e. to point
+            to Hadoop client conf/ directories in the local filesystem.
+        </description>
+    </property>
+
+    <!-- Sharelib Configuration -->
+    <property>
+        <name>oozie.service.ShareLibService.mapping.file</name>
+        <value> </value>
+        <description>
+            Sharelib mapping files contains list of key=value,
+            where key will be the sharelib name for the action and value is a comma separated list of
+            DFS or local filesystem directories or jar files.
+            Example.
+            oozie.pig_10=hdfs:///share/lib/pig/pig-0.10.1/lib/
+            oozie.pig=hdfs:///share/lib/pig/pig-0.11.1/lib/
+            oozie.distcp=hdfs:///share/lib/hadoop-2.2.0/share/hadoop/tools/lib/hadoop-distcp-2.2.0.jar
+            oozie.hive=file:///usr/local/oozie/share/lib/hive/
+        </description>
+    </property>
+
     <property>
       <name>oozie.service.HadoopAccessorService.kerberos.enabled</name>
       <value>false</value>
     </property>
-    
+
     <property>
       <name>oozie.service.JPAService.jdbc.driver</name>
       <value>org.apache.derby.jdbc.EmbeddedDriver</value>
     </property>
-    
-    <property>
+
+<property>
       <name>oozie.service.JPAService.jdbc.password</name>
       <value>SECRET:oozie-site:1:oozie.service.JPAService.jdbc.password</value>
     </property>
-    
+
     <property>
       <name>oozie.service.JPAService.jdbc.url</name>
       <value>jdbc:derby:${oozie.data.dir}/${oozie.db.schema.name}-db;create=true</value>
     </property>
-    
+
     <property>
       <name>oozie.service.JPAService.jdbc.username</name>
       <value>oozie</value>
     </property>
-    
+
     <property>
       <name>oozie.service.SparkConfigurationService.spark.configurations</name>
       <value>*=spark-conf</value>
     </property>
-    
+
     <property>
       <name>oozie.service.URIHandlerService.uri.handlers</name>
       <value>org.apache.oozie.dependency.FSURIHandler,org.apache.oozie.dependency.HCatURIHandler</value>
     </property>
-    
+
     <property>
       <name>oozie.services.ext</name>
       <value>
       org.apache.oozie.service.JMSAccessorService,org.apache.oozie.service.PartitionDependencyManagerService,org.apache.oozie.service.HCatAccessorService</value>
     </property>
-    
+
+<property>
+        <name>oozie.service.ActionService.executor.classes</name>
+        <value>
+            org.apache.oozie.action.decision.DecisionActionExecutor,
+            org.apache.oozie.action.hadoop.JavaActionExecutor,
+            org.apache.oozie.action.hadoop.FsActionExecutor,
+            org.apache.oozie.action.hadoop.MapReduceActionExecutor,
+            org.apache.oozie.action.hadoop.PigActionExecutor,
+            org.apache.oozie.action.hadoop.HiveActionExecutor,
+            org.apache.oozie.action.hadoop.ShellActionExecutor,
+            org.apache.oozie.action.hadoop.SqoopActionExecutor,
+            org.apache.oozie.action.hadoop.DistcpActionExecutor,
+            org.apache.oozie.action.hadoop.Hive2ActionExecutor,
+            org.apache.oozie.action.ssh.SshActionExecutor,
+            org.apache.oozie.action.oozie.SubWorkflowActionExecutor,
+            org.apache.oozie.action.email.EmailActionExecutor,
+            org.apache.oozie.action.hadoop.SparkActionExecutor
+        </value>
+        <description>
+            List of ActionExecutors classes (separated by commas).
+            Only action types with associated executors can be used in workflows.
+        </description>
+    </property>
   </configuration>
