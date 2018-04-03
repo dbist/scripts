@@ -44,7 +44,7 @@
 
     <property>
         <name>oozie.credentials.credentialclasses</name>
-        <value>hcat=org.apache.oozie.action.hadoop.HCatCredentials,hive2=org.apache.oozie.action.hadoop.Hive2Credentials</value>
+        <value>hive2=org.apache.oozie.action.hadoop.Hive2Credentials</value>
         <description>
             A list of credential class mapping for CredentialsProvider
         </description>
@@ -129,8 +129,17 @@
     </property>
 
     <property>
+        <name>oozie.service.SparkConfigurationService.spark.configurations.blacklist</name>
+        <value>spark.yarn.jar,spark.yarn.jars</value>
+        <description>
+            Comma separated list of properties to ignore from any Spark configurations specified in
+            oozie.service.SparkConfigurationService.spark.configurations property.
+        </description>
+    </property>
+
+    <property>
         <name>oozie.service.URIHandlerService.uri.handlers</name>
-        <value>org.apache.oozie.dependency.FSURIHandler,org.apache.oozie.dependency.HCatURIHandler</value>
+        <value>org.apache.oozie.dependency.FSURIHandler</value>
         <description>
             Enlist the different uri handlers supported for data availability checks.
         </description>
@@ -139,7 +148,7 @@
     <property>
         <name>oozie.services.ext</name>
         <value>
-            org.apache.oozie.service.JMSAccessorService,org.apache.oozie.service.PartitionDependencyManagerService,org.apache.oozie.service.HCatAccessorService</value>
+            org.apache.oozie.service.JMSAccessorService,org.apache.oozie.service.PartitionDependencyManagerService</value>
     </property>
 
     <property>
