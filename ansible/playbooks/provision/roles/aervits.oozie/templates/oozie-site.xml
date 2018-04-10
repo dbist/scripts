@@ -31,13 +31,13 @@
     </property>
     
     <property>
-      <name>oozie.service.AuthorizationService.security.enabled</name>
-      <value>true</value>
+      <name>oozie.service.AuthorizationService.authorization.enabled</name>
+      <value>false</value>
     </property>
     
     <property>
       <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
-      <value>*=/opt/hadoop/${{ hadoop_version }}/etc/hadoop</value>
+      <value>*=/opt/hadoop/{{ hadoop_version }}/etc/hadoop</value>
     </property>
     
     <property>
