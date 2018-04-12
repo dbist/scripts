@@ -1,8 +1,9 @@
 ---
 # defaults file for aervits.oozie
   oozie_version: "oozie-5.0.0"
-  oozie_tar_url: "https://people.apache.org/~andras/{{ oozie_version }}-rc0/{{ oozie_version }}.tar.gz"
+  oozie_version_short: 5.0.0
+  oozie_tar_url: "http://www-us.apache.org/dist/oozie/{{ oozie_version_short }}/{{ oozie_version }}.tar.gz"
   oozie_sha_sum: F02DA16BF93236552BEEBE6CEA9886BAFD2175CD5799C35667026CDF8B94C546CE10FB0E714D190301A1A3A71AFA8F41888EEAB86E45A67D87ABD93C6CC2E76F
 
-  # replace with expression to dynamically get the version from the environment.
+# replace with expression to dynamically get the version from the environment.
   hadoop_version_short: 2.7.5
