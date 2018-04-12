@@ -1,79 +1,132 @@
   <configuration>
-    
     <property>
       <name>oozie.action.retry.interval</name>
       <value>30</value>
     </property>
-    
+
     <property>
       <name>oozie.authentication.simple.anonymous.allowed</name>
       <value>true</value>
     </property>
-    
+
     <property>
       <name>oozie.authentication.type</name>
       <value>simple</value>
     </property>
-    
+
+    <property>
+        <name>oozie.server.authentication.type</name>
+        <value>${oozie.authentication.type}</value>
+        <description>
+            Defines authentication used for Oozie server communicating to other Oozie server over HTTP(s).
+            Supported values are: simple | kerberos | #AUTHENTICATOR_CLASSNAME#
+        </description>
+    </property>
+
     <property>
       <name>oozie.base.url</name>
       <value>{{ ansible_nodename }}:11000/oozie</value>
     </property>
-    
+
     <property>
       <name>oozie.credentials.credentialclasses</name>
       <value>hcat=org.apache.oozie.action.hadoop.HCatCredentials,hive2=org.apache.oozie.action.hadoop.Hive2Credentials</value>
     </property>
-    
+
     <property>
       <name>oozie.db.schema.name</name>
       <value>oozie</value>
     </property>
-    
+
     <property>
       <name>oozie.service.AuthorizationService.authorization.enabled</name>
       <value>false</value>
     </property>
-    
+
     <property>
       <name>oozie.service.HadoopAccessorService.hadoop.configurations</name>
       <value>*=/opt/hadoop/{{ hadoop_version }}/etc/hadoop</value>
     </property>
-    
+
     <property>
       <name>oozie.service.HadoopAccessorService.kerberos.enabled</name>
       <value>false</value>
     </property>
-    
+
     <property>
       <name>oozie.service.JPAService.jdbc.driver</name>
       <value>org.apache.derby.jdbc.EmbeddedDriver</value>
     </property>
-    
+
     <property>
       <name>oozie.service.JPAService.jdbc.url</name>
       <value>jdbc:derby:${oozie.data.dir}/${oozie.db.schema.name}-db;create=true</value>
     </property>
-    
+
     <property>
       <name>oozie.service.JPAService.jdbc.username</name>
       <value>oozie</value>
     </property>
-    
+
     <property>
       <name>oozie.service.SparkConfigurationService.spark.configurations</name>
       <value>*=spark-conf</value>
     </property>
-    
+
     <property>
       <name>oozie.service.URIHandlerService.uri.handlers</name>
       <value>org.apache.oozie.dependency.FSURIHandler,org.apache.oozie.dependency.HCatURIHandler</value>
     </property>
-    
+
     <property>
       <name>oozie.services.ext</name>
       <value>
       org.apache.oozie.service.JMSAccessorService,org.apache.oozie.service.PartitionDependencyManagerService,org.apache.oozie.service.HCatAccessorService</value>
     </property>
-    
+
+<property>
+        <name>oozie.services</name>
+        <value>
+            org.apache.oozie.service.SchedulerService,
+            org.apache.oozie.service.MetricsInstrumentationService,
+            org.apache.oozie.service.MemoryLocksService,
+            org.apache.oozie.service.UUIDService,
+            org.apache.oozie.service.ELService,
+            org.apache.oozie.service.AuthorizationService,
+            org.apache.oozie.service.UserGroupInformationService,
+            org.apache.oozie.service.HadoopAccessorService,
+            org.apache.oozie.service.JobsConcurrencyService,
+            org.apache.oozie.service.URIHandlerService,
+            org.apache.oozie.service.DagXLogInfoService,
+            org.apache.oozie.service.SchemaService,
+            org.apache.oozie.service.LiteWorkflowAppService,
+            org.apache.oozie.service.JPAService,
+            org.apache.oozie.service.StoreService,
+            org.apache.oozie.service.SLAStoreService,
+            org.apache.oozie.service.DBLiteWorkflowStoreService,
+            org.apache.oozie.service.CallbackService,
+            org.apache.oozie.service.ActionService,
+            org.apache.oozie.service.ShareLibService,
+            org.apache.oozie.service.CallableQueueService,
+            org.apache.oozie.service.ActionCheckerService,
+            org.apache.oozie.service.RecoveryService,
+            org.apache.oozie.service.PurgeService,
+            org.apache.oozie.service.CoordinatorEngineService,
+            org.apache.oozie.service.BundleEngineService,
+            org.apache.oozie.service.DagEngineService,
+            org.apache.oozie.service.CoordMaterializeTriggerService,
+            org.apache.oozie.service.StatusTransitService,
+            org.apache.oozie.service.PauseTransitService,
+            org.apache.oozie.service.GroupsService,
+            org.apache.oozie.service.ProxyUserService,
+            org.apache.oozie.service.XLogStreamingService,
+            org.apache.oozie.service.JvmPauseMonitorService,
+            org.apache.oozie.service.SparkConfigurationService,
+            org.apache.oozie.service.SchemaCheckerService
+        </value>
+        <description>
+            All services to be created and managed by Oozie Services singleton.
+            Class names must be separated by commas.
+        </description>
+    </property>
   </configuration>
