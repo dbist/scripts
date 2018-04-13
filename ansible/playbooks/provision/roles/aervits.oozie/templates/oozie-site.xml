@@ -129,4 +129,13 @@
             Class names must be separated by commas.
         </description>
     </property>
+
+    <property>
+        <name>oozie.launcher.default.max.attempts</name>
+        <value>2</value>
+        <description>
+            The default YARN maximal attempt count of the Launcher AM
+        </description>
+    </property>
+
   </configuration>
