@@ -4,7 +4,7 @@
     get_url:
       url: "{{ hadoop_url }}"
       dest: "/tmp/{{ hadoop_version }}.tar.gz"
-      checksum: "sha1:{{ hadoop_sha1_sum }}"
+      checksum: "sha512:{{ hadoop_sha_sum }}"
 
   - name: create hadoop directory
     file:
@@ -88,31 +88,31 @@
       mode: 0775
       recurse: yes
 
-  - name: export HADOOP_PREFIX
+  - name: export HADOOP_HOME
     lineinfile:
       path: /etc/environment
-      line: export HADOOP_PREFIX="/opt/hadoop/{{ hadoop_version  }}"
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
       state: present
       create: yes
 
   - name: alias hdfs command
     lineinfile:
       path: /etc/bashrc
-      line: alias hdfs=$HADOOP_PREFIX/bin/hdfs
+      line: alias hdfs=$HADOOP_HOME/bin/hdfs
       state: present
       create: yes
 
   - name: alias hadoop command
     lineinfile:
       path: /etc/bashrc
-      line: alias hadoop=$HADOOP_PREFIX/bin/hadoop
+      line: alias hadoop=$HADOOP_HOME/bin/hadoop
       state: present
       create: yes
 
   - name: alias yarn command
     lineinfile:
       path: /etc/bashrc
-      line: alias yarn=$HADOOP_PREFIX/bin/yarn
+      line: alias yarn=$HADOOP_HOME/bin/yarn
       state: present
       create: yes
 
@@ -125,7 +125,7 @@
     become_user: hadoop
 
   - name: format hdfs
-    shell: $HADOOP_PREFIX/bin/hdfs namenode -format
+    shell: $HADOOP_HOME/bin/hdfs namenode -format
     become: true
     become_user: hadoop
     args:
