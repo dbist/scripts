@@ -125,7 +125,7 @@
 
   - name: add oozie specific core-site.xml properties
     blockinfile:
-      path: $HADOOP_PREFIX/etc/hadoop/core-site.xml
+      path: $HADOOP_HOME/etc/hadoop/core-site.xml
       block: |
               <!-- OOZIE -->
               <property>
