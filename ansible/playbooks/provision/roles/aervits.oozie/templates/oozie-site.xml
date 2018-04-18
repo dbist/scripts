@@ -138,4 +138,22 @@
         </description>
     </property>
 
+<!-- CallbackService -->
+
+    <property>
+        <name>oozie.service.CallbackService.base.url</name>
+        <value>${oozie.base.url}/callback</value>
+        <description>
+             Base callback URL used by ActionExecutors.
+        </description>
+    </property>
+
+    <property>
+        <name>oozie.service.CallbackService.early.requeue.max.retries</name>
+        <value>5</value>
+        <description>
+            If Oozie receives a callback too early (while the action is in PREP state), it will requeue the command this many times
+            to give the action time to transition to RUNNING.
+        </description>
+    </property>
   </configuration>
