@@ -91,7 +91,14 @@
   - name: export HADOOP_HOME
     lineinfile:
       path: /etc/environment
-      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version  }}"
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version }}"
+      state: present
+      create: yes
+
+  - name: export HADOOP_CONF_DIR
+    lineinfile:
+      path: /etc/environment
+      line: export HADOOP_CONF_DIR="/opt/hadoop/{{ hadoop_version }}/etc/hadoop"
       state: present
       create: yes
 

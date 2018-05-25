@@ -1,0 +1,143 @@
+---
+# tasks file for aervits.spark---
+- name: download spark release
+  get_url:
+    url: "{{ spark_url }}"
+    dest: "/tmp/{{ spark_version }}.tar.gz"
+    checksum: "sha512:{{ spark_sha_sum }}"
+
+- name: create spark directory
+  file:
+    path: /opt/spark
+    state: directory
+    owner: spark
+    group: spark
+    mode: 0775
+
+- name: extract spark release
+  unarchive:
+    src: "/tmp/{{ spark_version }}.tar.gz"
+    dest: /opt/spark
+    remote_src: yes
+    keep_newer: yes
+    creates: "/opt/spark/{{ spark_version }}"
+
+- name: rename spark directory
+  command: mv /opt/spark/{{ spark_version }}-bin-{{ hadoop_version }} /opt/spark/{{ spark_version }}
+  args:
+    creates: "/opt/spark/{{ spark_version }}"
+
+- name: export SPARK_HOME
+  lineinfile:
+    path: /etc/environment
+    line: export SPARK_HOME="/opt/spark/{{ spark_version }}"
+    state: present
+    create: yes
+
+#   - name: create spark namenode directory
+#     file:
+#       path: /dev/spark
+#       state: directory
+#       owner: spark
+#       group: spark
+#       mode: 0775
+#
+#   - name: create yarn nodemanager local dir directory
+#     file:
+#       path: /spark/yarn/local
+#       state: directory
+#       owner: spark
+#       group: spark
+#       mode: 0775
+#
+#   - name: configure core-site.xml
+#     template:
+#       src: templates/spark/core-site.xml
+#       dest: "/opt/spark/{{ spark_version }}/etc/hadoop/core-site.xml"
+#
+#   - name: configure hdfs-site.xml
+#     template:
+#       src: templates/spark/hdfs-site.xml
+#       dest: "/opt/spark/{{ spark_version }}/etc/hadoop/hdfs-site.xml"
+#
+#   - name: configure mapred-site.xml
+#     template:
+#       src: templates/spark/mapred-site.xml
+#       dest: "/opt/spark/{{ spark_version }}/etc/hadoop/mapred-site.xml"
+#
+#   - name: configure yarn-site.xml
+#     template:
+#       src: templates/spark/yarn-site.xml
+#       dest: "/opt/spark/{{ spark_version }}/etc/hadoop/yarn-site.xml"
+#
+#   - name: configure capacity-scheduler.xml
+#     template:
+#       src: templates/spark/capacity-scheduler.xml
+#       dest: "/opt/spark/{{ spark_version }}/etc/hadoop/capacity-scheduler.xml"
+#
+#   - name: change spark directory permissions
+#     file:
+#       path: "/opt/spark/{{ spark_version }}"
+#       state: directory
+#       owner: spark
+#       group: spark
+#       mode: 0775
+#       recurse: yes
+#
+
+#
+#   - name: export HADOOP_CONF_DIR
+#     lineinfile:
+#       path: /etc/environment
+#       line: export HADOOP_CONF_DIR="/opt/spark/{{ spark_version }}/etc/hadoop"
+#       state: present
+#       create: yes
+#
+
+#
+#   - name: alias spark command
+#     lineinfile:
+#       path: /etc/bashrc
+#       line: alias spark=$HADOOP_HOME/bin/spark
+#       state: present
+#       create: yes
+#
+#   - name: alias yarn command
+#     lineinfile:
+#       path: /etc/bashrc
+#       line: alias yarn=$HADOOP_HOME/bin/yarn
+#       state: present
+#       create: yes
+#
+#  # move this to users role to avoid duplication in other playbooks, i.e. spark, hbase
+#  # also not indempotent
+#
+#   - name: set up passwordless ssh for service user
+#     shell: cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
+#     become: true
+#     become_user: spark
+#
+#   - name: format hdfs
+#     shell: $HADOOP_HOME/bin/hdfs namenode -format
+#     become: true
+#     become_user: spark
+#     args:
+#       creates: /dev/spark/hdfs/namenode1/current/VERSION
+#
+# # fails due to pexpect module < 3.3 figure out how to install it and then uncomment start script
+#
+#   - name: start namenode, datanode, secondarynamenode
+#     expect:
+#       command: /opt/spark/{{ spark_version }}/sbin/start-dfs.sh
+#       responses:
+#           'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
+#     become: true
+#     become_user: spark
+#
+#   - name: start resourcemanager, nodemanager
+#     expect:
+#       command: /opt/spark/{{ spark_version }}/sbin/start-yarn.sh
+#       responses:
+#           'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
+#     become: true
+#     become_user: spark
