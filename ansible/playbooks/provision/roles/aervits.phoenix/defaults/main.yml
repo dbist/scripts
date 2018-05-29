@@ -1,5 +1,14 @@
 ---
 # defaults file for aervits.phoenix
-  phoenix_version: "apache-phoenix-5.0.0-alpha-HBase-2.0"
-  phoenix_url: "http://www-us.apache.org/dist/phoenix/{{ phoenix_version }}/bin/{{ phoenix_version }}-bin.tar.gz"
-  phoenix_md5_sum: 361f9b671cdddf9326243afa6fa52d7f
+"phoenix_version": {
+    "full": "apache-phoenix-4.14.0-HBase-1.4", 
+    "major": 2, 
+    "minor": 1, 
+    "revision": 1, 
+    "string": "apache-phoenix-4.14.0-HBase-1.4",
+    "hbase_branch": "1.4",
+    "rc": "-rc1"
+}
+#  phoenix_version: "apache-phoenix-4.14.0-HBase-1.4"
+phoenix_url: "https://dist.apache.org/repos/dist/dev/phoenix/{{ phoenix_version.full }}-rc1/bin/{{ phoenix_version.string }}-bin.tar.gz"
+phoenix_sha512_sum: 2b18281c5f82a72b10a7310ee01f664ece6a54b7b08499aa3020c041fd3a792b6ead1526a0fc621dec161773d608b5b686c5efe312c6df7c8371fac1e2cfbab3 

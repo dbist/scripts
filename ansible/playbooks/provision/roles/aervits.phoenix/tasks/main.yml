@@ -4,7 +4,7 @@
     get_url:
       url: "{{ phoenix_url }}"
       dest: "/tmp/{{ phoenix_version }}.bin.tar.gz"
-      checksum: "md5:{{ phoenix_md5_sum }}"
+      checksum: "sha512:{{ phoenix_sha512_sum }}"
 
   - name: create phoenix directory
     file:
@@ -20,24 +20,30 @@
       dest: /opt/phoenix
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/phoenix/{{ phoenix_version }}-bin"
+      creates: "/opt/phoenix/{{ phoenix_version.string }}-bin"
 
   - name: export PHOENIX_HOME
     lineinfile:
       path: /etc/environment
-      line: export PHOENIX_HOME="/opt/phoenix/{{ phoenix_version }}-bin"
+      line: export PHOENIX_HOME="/opt/phoenix/{{ phoenix_version.string }}-bin"
       state: present
       create: yes
 
-  - name: copy phoenix jar to hbase directory
+  - name: register phoenix server jar
+    command: "find /opt/phoenix/{{ phoenix_version.string }}-bin/ -type f -iname *{{phoenix_version.hbase_branch}}-server.jar" 
+    register: phoenix_server_jar
+
+  - name: copy phoenix jar into hbase directory
     copy:
-      src: "/opt/phoenix/{{ phoenix_version }}-bin/phoenix-5.0.0-alpha-HBase-2.0-server.jar"
+      src: "{{ item }}"
       dest: "$HBASE_HOME/lib"
       owner: hbase
       group: hbase
       mode: 0775
       remote_src: yes
-  
+    with_items:
+      - "{{ phoenix_server_jar.stdout_lines }}"
+
   - name: add phoenix specific hbase-site.xml properties
     blockinfile:
       path: $HBASE_HOME/conf/hbase-site.xml
