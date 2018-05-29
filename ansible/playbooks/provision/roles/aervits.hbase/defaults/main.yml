@@ -1,2 +1,5 @@
 ---
 # defaults file for aervits.hbase
+  hbase_version: "hbase-1.3.2"
+  hbase_url: "https://dist.apache.org/repos/dist/dev/hbase/{{ hbase_version }}RC1/{{ hbase_version }}-bin.tar.gz"
+  hbase_sha_sum: 9125108AA350A1453D89E38CD7184D6B896FF067928FEEF3B7C43F6CEB205AD2E241D85ED2EB8C0C90E61C9676C205FA2B40AAD65F4B0086624C968291A06121
