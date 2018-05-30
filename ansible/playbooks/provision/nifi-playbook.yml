@@ -1,0 +1,15 @@
+---
+- hosts: all
+  roles:
+#    - aervits.jdk
+#    - aervits.ssh
+    - aervits.users
+#    - aervits.hosts
+#    - aervits.common
+    - aervits.nifi
+  remote_user: vagrant
+  become: true
+  vars:
+    usernames:
+       - vagrant
+       - nifi

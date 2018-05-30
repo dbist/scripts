@@ -3,6 +3,5 @@
 
    service_users:
      - hadoop
-     - hbase
      - oozie
-     - spark
+     - nifi
