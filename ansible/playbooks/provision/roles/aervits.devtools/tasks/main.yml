@@ -5,7 +5,7 @@
     package:
       name: "{{ item }}"
       state: latest
-    with_items: wget, git, unzip, zip
+    with_items: wget, git, unzip, zip, gcc, python-devel
 
   - name: download maven release "{{ maven_version }}"
     get_url:

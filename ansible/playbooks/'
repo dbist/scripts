@@ -1,0 +1,50 @@
+---
+# tasks file for aervits.airflow
+
+  - name: download latest pip
+    get_url:
+      url: "{{ pip_url }}"
+      dest: "/tmp/{{ pip_version.string }}.tar.gz"
+      checksum: "sha256:{{ pip_sha256_sum }}"
+      validate_certs: no
+
+  - name: install latest pip package
+    pip: 
+      name: file:///tmp/{{ pip_version.string }}.tar.gz
+#      state: forcereinstall
+
+  - name: install latest airflow package
+    pip:
+      name: apache-airflow
+      state: latest
+
+  # - name: create nifi directory
+  #   file:
+  #     path: /opt/nifi
+  #     state: directory
+  #     owner: nifi
+  #     group: nifi
+  #     mode: 0775
+  #
+  # - name: extract nifi release
+  #   unarchive:
+  #     src: "/tmp/{{ nifi_version.string }}.bin.tar.gz"
+  #     dest: /opt/nifi
+  #     remote_src: yes
+  #     keep_newer: yes
+  #     creates: "/opt/nifi/{{ nifi_version.string }}"
+  #
+  # - name: create nifi directory
+  #   file:
+  #     path: /opt/nifi
+  #     state: directory
+  #     owner: nifi
+  #     group: nifi
+  #     mode: 0775
+  #
+  # - name: export NIFI_HOME
+  #   lineinfile:
+  #     path: /etc/environment
+  #     line: export NIFI_HOME="/opt/nifi/{{ nifi_version.string }}"
+  #     state: present
+  #     create: yes

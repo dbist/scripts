@@ -5,3 +5,5 @@
      - hadoop
      - oozie
      - nifi
+     - hbase
+     - airflow

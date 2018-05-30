@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
   # SHELL
 
   config.vm.provision "ansible" do |ansible|
-     ansible.playbook = "provision/nifi-playbook.yml"
+     ansible.playbook = "provision/airflow-playbook.yml"
      ansible.compatibility_mode = "2.0"
     # enable for debugging
     # ansible.verbose = "vvv"
