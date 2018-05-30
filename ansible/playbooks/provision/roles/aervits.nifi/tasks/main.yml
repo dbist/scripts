@@ -22,6 +22,14 @@
       keep_newer: yes
       creates: "/opt/nifi/{{ nifi_version.string }}"
 
+  - name: create nifi directory
+    file:
+      path: /opt/nifi
+      state: directory
+      owner: nifi
+      group: nifi
+      mode: 0775
+
   - name: export NIFI_HOME
     lineinfile:
       path: /etc/environment
