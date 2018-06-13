@@ -1,5 +1,5 @@
 ---
 # vars file for aervits.hadoop
-#  hadoop_version: hadoop-3.1.0
-#  hadoop_url: "http://www-us.apache.org/dist/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz"
-#  hadoop_sha_sum: "8C620D1C82CC04629B7ADA90BA0691C734196295E0103D74569DE1F29E914327C281C0C9F1E48881DF3D567F6482C288BD493A16257C801C82247F5EB5D7B1E4"
+  hadoop_version: hadoop-3.1.0
+  hadoop_url: "http://www-us.apache.org/dist/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz"
+  hadoop_sha_sum: "8C620D1C82CC04629B7ADA90BA0691C734196295E0103D74569DE1F29E914327C281C0C9F1E48881DF3D567F6482C288BD493A16257C801C82247F5EB5D7B1E4"

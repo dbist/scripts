@@ -5,4 +5,5 @@
      - hadoop
      - oozie
      - hbase
+     - spark
      - nifi
