@@ -4,4 +4,5 @@
    service_users:
      - hadoop
      - oozie
+     - hbase
      - nifi
