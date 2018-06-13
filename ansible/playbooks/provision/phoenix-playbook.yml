@@ -9,7 +9,7 @@
     - aervits.hadoop
     - aervits.hbase
     - aervits.phoenix
-    - aervits.spark
+#    - aervits.spark
   remote_user: vagrant
   become: true
   vars:
