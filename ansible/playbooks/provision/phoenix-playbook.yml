@@ -9,7 +9,7 @@
     - aervits.hadoop
     - aervits.hbase
     - aervits.phoenix
-#    - aervits.spark
+#    - aervits.spark # requires a compile with hadoop 3 for phoenix
   remote_user: vagrant
   become: true
   vars:
