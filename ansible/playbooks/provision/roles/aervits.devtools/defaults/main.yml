@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.devtools
-  maven_version: "apache-maven-3.5.3"
-  maven_url: "http://mirror.cogentco.com/pub/apache/maven/maven-3/3.5.3/binaries/{{ maven_version }}-bin.tar.gz"
-  maven_md5_sum: 51025855d5a7456fc1a67666fbef29de
+  maven_version: "apache-maven-3.5.4"
+  maven_url: "http://www-us.apache.org/dist/maven/maven-3/3.5.4/binaries/{{ maven_version }}-bin.tar.gz"
+  maven_sha_sum: ce50b1c91364cb77efe3776f756a6d92b76d9038b0a0782f7d53acf1e997a14d
