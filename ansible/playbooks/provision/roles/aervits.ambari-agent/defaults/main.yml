@@ -1,4 +1,4 @@
 ---
 # defaults file for aervits.ambari-agent
-  ambari_repo: http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.2.2/ambari.repo
+  ambari_repo: http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.7.1.0/ambari.repo
   ambari_server_hostname: "{{ groups['ambari-server'][0] }}"
