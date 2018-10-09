@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.hadoop
-  hadoop_version: hadoop-2.7.6
-  hadoop_url: http://apache.mirrors.pair.com/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz
-  hadoop_sha_sum: 725A86B51674573A2BA695286CE40CB6EA631BFFE6445E010A11EECBB93B6647CB424CFE95CEA99C2CD52FCAEF438E2645DA3855D808D11359E0E3494E90B331
+  hadoop_version: hadoop-2.7.7
+  hadoop_url: http://www-us.apache.org/dist/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz
+  hadoop_sha_sum: 17C8917211DD4C25F78BF60130A390F9E273B0149737094E45F4AE5C917B1174B97EB90818C5DF068E607835120126281BCC07514F38BD7FD3CB8E9D3DB1BDDE
