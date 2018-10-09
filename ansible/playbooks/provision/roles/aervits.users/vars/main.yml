@@ -6,3 +6,4 @@
      - oozie
      - hbase
      - nifi
+     - spark
