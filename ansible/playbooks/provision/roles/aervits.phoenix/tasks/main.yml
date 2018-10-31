@@ -20,17 +20,17 @@
       dest: /opt/phoenix
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/phoenix/{{ phoenix_version.string }}-bin"
+      creates: "/opt/phoenix/{{ phoenix_version.full }}-bin"
 
   - name: export PHOENIX_HOME
     lineinfile:
       path: /etc/environment
-      line: export PHOENIX_HOME="/opt/phoenix/{{ phoenix_version.string }}-bin"
+      line: export PHOENIX_HOME="/opt/phoenix/{{ phoenix_version.full }}-bin"
       state: present
       create: yes
 
   - name: register phoenix server jar
-    command: "find /opt/phoenix/{{ phoenix_version.string }}-bin/ -type f -iname *{{phoenix_version.hbase_branch}}-server.jar" 
+    command: "find /opt/phoenix/{{ phoenix_version.full }}-bin/ -type f -iname *{{phoenix_version.hbase_branch}}-server.jar" 
     register: phoenix_server_jar
 
   - name: copy phoenix jar into hbase directory
