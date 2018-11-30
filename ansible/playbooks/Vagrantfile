@@ -53,6 +53,9 @@ Vagrant.configure("2") do |config|
   
   config.vm.provider "virtualbox" do |vb|
      vb.memory = "8192"
+#     fix for message with NIC vulnerability but still doesn't address the issue
+#     as nic type e1000 is invalid, E1000 also doesn't work
+#     vb.default_nic_type = "e1000"
   end
 
   # Display the VirtualBox GUI when booting the machine
