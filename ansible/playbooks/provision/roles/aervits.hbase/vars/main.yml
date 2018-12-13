@@ -2,13 +2,13 @@
 # vars file for aervits.hbase
 
 "hbase_version": {
-    "full": "hbase-2.0.3",
+    "full": "hbase-2.0.4",
     "major": 2,
     "minor": 0,
-    "revision": 3,
-    "version_string": "2.0.3",
+    "revision": 4,
+    "version_string": "2.0.4",
     "rc": "RC0"
 }
 
 hbase_url: "https://dist.apache.org/repos/dist/dev/hbase/{{ hbase_version.full }}{{ hbase_version.rc }}/{{ hbase_version.full }}-bin.tar.gz"
-hbase_sha_sum: 495AEC69BE5DB41C4EC8180328ECF96D4D632B3984FD0506312DDCB1A8DA0C130D5C260611E50B328877A04337B4EAF54874D312DC35AE7D21A2AE11CD89BA7D 
+hbase_sha_sum: 93AA3EB6D183C7DE1F196AFF7A35129E7F9C1198267AE987514B58042A7A77709BE37038C00F1843DD4C015874B7E7ECF5907DECB5A9A722D186D8D7F8A7B584
