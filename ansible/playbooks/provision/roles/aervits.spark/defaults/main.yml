@@ -1,6 +1,9 @@
 ---
 # defaults file for aervits.spark---
-  spark_version: spark-2.3.2
+  spark_version: spark-2.4.0
   hadoop_version: hadoop2.7
   spark_url: http://www-us.apache.org/dist/spark/{{ spark_version }}/{{ spark_version }}-bin-{{ hadoop_version }}.tgz
-  spark_sha_sum: E61D9330125746A24D7784166A15B41514546CAD874357C98DCA0A2C39FA7303D8FA7C049BA6CDF5A24C172D4F47A2E5B6E1F658A57A9B2A30D46D9858CDB531
+  spark_sha_sum: 5F4184E0 FE7E5C8A E67F5E6B C5DEEE88 1051CC71
+                               2E9FF8AE DDF35297 24C00E40 2C94BB75 561DD951
+                               7A372F06 C1FCB78D C7AE65DC BD4C156B 3BA4D8E2
+                               67EC2936
