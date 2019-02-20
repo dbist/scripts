@@ -3,7 +3,7 @@
 "phoenix_version": {
     "full": "apache-phoenix-4.14.1-HBase-1.4",
     "hbase_branch": "1.4",
-    "rc": "-rc0"
+    "rc": ""
 }
-phoenix_url: "https://dist.apache.org/repos/dist/dev/phoenix/{{ phoenix_version.full }}{{ phoenix_version.rc }}/bin/{{ phoenix_version.full }}-bin.tar.gz"
+phoenix_url: "https://www-us.apache.org/dist/phoenix/{{ phoenix_version.full }}{{ phoenix_version.rc }}/bin/{{ phoenix_version.full }}-bin.tar.gz"
 phoenix_sha512_sum: 218f036062869c71d5d9e9ddbf9dd9c7f02ecc29266a033feca3c231a7119def4126802c4a7f3a3cb5361ecb74f39fc6ca846d046a732ed28d3fa130eee5e7ab
