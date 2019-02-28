@@ -135,6 +135,7 @@
     shell: $HADOOP_HOME/bin/hdfs namenode -format
     become: true
     become_user: hadoop
+    run_once: yes
     args:
       creates: /dev/hadoop/hdfs/namenode1/current/VERSION
 
@@ -155,3 +156,11 @@
           'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
     become: true
     become_user: hadoop
+
+  - name: create hdfs directories
+    script: ../scripts/create_dirs.sh
+    args:
+      creates: /tmp/hdfs.sh
+    become: yes
+    become_user: hadoop
+    run_once: yes
