@@ -1,6 +1,6 @@
 ---
 # tasks file for aervits.phoenix
-  - name: download phoenix release
+  - name: download phoenix {{ phoenix_version }} release
     get_url:
       url: "{{ phoenix_url }}"
       dest: "/tmp/{{ phoenix_version }}.bin.tar.gz"

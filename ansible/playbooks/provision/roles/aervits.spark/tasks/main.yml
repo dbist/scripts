@@ -1,6 +1,6 @@
 ---
 # tasks file for aervits.spark---
-- name: download spark release
+- name: download spark {{ spark_version }} release
   get_url:
     url: "{{ spark_url }}"
     dest: "/tmp/{{ spark_version }}.tar.gz"
