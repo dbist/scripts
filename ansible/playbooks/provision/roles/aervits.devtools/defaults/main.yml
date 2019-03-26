@@ -1,5 +1,5 @@
 ---
 # defaults file for aervits.devtools
-  maven_version: "apache-maven-3.5.4"
-  maven_url: "http://www-us.apache.org/dist/maven/maven-3/3.5.4/binaries/{{ maven_version }}-bin.tar.gz"
-  maven_sha_sum: ce50b1c91364cb77efe3776f756a6d92b76d9038b0a0782f7d53acf1e997a14d
+  maven_version: "apache-maven-3.6.0"
+  maven_url: "http://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/{{ maven_version }}-bin.tar.gz"
+  maven_sha_sum: fae9c12b570c3ba18116a4e26ea524b29f7279c17cbaadc3326ca72927368924d9131d11b9e851b8dc9162228b6fdea955446be41207a5cfc61283dd8a561d2f

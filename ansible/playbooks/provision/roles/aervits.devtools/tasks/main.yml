@@ -11,7 +11,7 @@
     get_url:
       url: "{{ maven_url }}"
       dest: "/tmp/{{ maven_version }}.bin.tar.gz"
-      checksum: "sha256:{{ maven_sha_sum }}"
+      checksum: "sha512:{{ maven_sha_sum }}"
 
   - name: create maven directory
     file:
