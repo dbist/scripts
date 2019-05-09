@@ -1,6 +1,6 @@
 ---
 # vars file for aervits.hadoop
-hadoop_version: hadoop-3.2.0
-hadoop_url: "http://www-us.apache.org/dist/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz"
-hadoop_sha_sum: 79676A7D ADBC4740 CB2FF4AE 7AF75F5B 0A45B474 8F217F41 79AB6482 7B840EEF
-         58C63B91 32260C56 82CB28B6 D12A27D4 A4D09A15 173ACA15 8FB1FC3C DB0B1609 
+#hadoop_version: hadoop-3.2.0
+#hadoop_url: "http://www-us.apache.org/dist/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz"
+#hadoop_sha_sum: 79676A7D ADBC4740 CB2FF4AE 7AF75F5B 0A45B474 8F217F41 79AB6482 7B840EEF
+#         58C63B91 32260C56 82CB28B6 D12A27D4 A4D09A15 173ACA15 8FB1FC3C DB0B1609
