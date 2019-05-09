@@ -5,12 +5,12 @@
     "full": "hbase-2.2.0",
     "major": 2,
     "minor": 2,
-    "revision": 0,
+    "revision": 3,
     "version_string": "2.2.0",
-    "rc": "RC0"
+    "rc": "RC3"
 }
 
 hbase_url: "https://dist.apache.org/repos/dist/dev/hbase/{{ hbase_version.version_string }}{{ hbase_version.rc}}/{{ hbase_version.full }}-bin.tar.gz"
-hbase_sha_sum: D121EA52 CCC064F5 A2A2EE5B 5C965098 3FCD69CB 2C406D33
-                        D276BF71 7DA241AD 8BC1D495 5BBF9E75 099C4D97 F7483F09
-                        B93A2EB5 01AEDDCE F433F142 FDEA7D3D
+hbase_sha_sum: 053CB1A0 F03A5446 7F6991D3 241D6C73 89F86DE6 16B0BE2F
+                        F670C564 3DDECD48 0B743204 C68921C6 5A744828 5F888964
+                        09544925 1696199D 062FB933 E3A4AFFE 
