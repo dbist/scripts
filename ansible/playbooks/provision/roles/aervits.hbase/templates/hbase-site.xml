@@ -280,4 +280,12 @@
         <name>hbase.procedure.regionserver.classes</name>
         <value>org.apache.hadoop.hbase.backup.regionserver.LogRollRegionServerProcedureManager</value>
     </property>
+
+   <!-- this property is only necessary on durable fs with hsync to disable durability.
+        on single node cluster only, do not use in production -->
+   <property>
+     <name>hbase.unsafe.stream.capability.enforce</name>
+     <value>false</value>
+   </property>
+
 </configuration>
