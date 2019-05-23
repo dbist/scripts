@@ -1,6 +1,6 @@
 ---
 # tasks file for aervits.hbase
-  - name: download hbase {{ hbase_version.full }} release
+  - name: download hbase {{ hbase_version.version_string }} release
     get_url:
       url: "{{ hbase_url }}"
       dest: "/tmp/{{ hbase_version.full }}-bin.tar.gz"
