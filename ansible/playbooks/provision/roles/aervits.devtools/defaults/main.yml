@@ -9,5 +9,5 @@
     "version_string": "3.6.1",
     "rc": ""
 }
-  maven_url: "http://www-us.apache.org/dist/maven/maven-3/{{ maven_version.version_string }}/binaries/{{ maven_version.full }}-bin.tar.gz"
-  maven_sha_sum: b4880fb7a3d81edd190a029440cdf17f308621af68475a4fe976296e71ff4a4b546dd6d8a58aaafba334d309cc11e638c52808a4b0e818fc0fd544226d952544
+maven_url: "http://www-us.apache.org/dist/maven/maven-3/{{ maven_version.version_string }}/binaries/{{ maven_version.full }}-bin.tar.gz"
+maven_sha_sum: b4880fb7a3d81edd190a029440cdf17f308621af68475a4fe976296e71ff4a4b546dd6d8a58aaafba334d309cc11e638c52808a4b0e818fc0fd544226d952544

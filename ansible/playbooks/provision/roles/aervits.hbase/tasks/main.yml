@@ -1,9 +1,9 @@
 ---
 # tasks file for aervits.hbase
-  - name: download hbase {{ hbase_version }} release
+  - name: download hbase {{ hbase_version.full }} release
     get_url:
       url: "{{ hbase_url }}"
-      dest: "/tmp/{{ hbase_version }}.bin.tar.gz"
+      dest: "/tmp/{{ hbase_version.full }}-bin.tar.gz"
       checksum: "sha512:{{ hbase_sha_sum }}"
 
   - name: create hbase directory
@@ -16,7 +16,7 @@
 
   - name: extract hbase release
     unarchive:
-      src: "/tmp/{{ hbase_version }}.bin.tar.gz"
+      src: "/tmp/{{ hbase_version.full }}-bin.tar.gz"
       dest: /opt/hbase
       remote_src: yes
       keep_newer: yes
