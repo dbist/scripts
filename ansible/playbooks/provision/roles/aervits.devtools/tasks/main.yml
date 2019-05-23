@@ -7,10 +7,10 @@
       state: latest
     with_items: wget, git, unzip, zip
 
-  - name: download maven release "{{ maven_version }}"
+  - name: download maven "{{ maven_version.version_string }} release"
     get_url:
       url: "{{ maven_url }}"
-      dest: "/tmp/{{ maven_version }}.bin.tar.gz"
+      dest: "/tmp/{{ maven_version.full }}.bin.tar.gz"
       checksum: "sha512:{{ maven_sha_sum }}"
 
   - name: create maven directory
@@ -20,19 +20,19 @@
 
   - name: extract maven release
     unarchive:
-      src: "/tmp/{{ maven_version }}.bin.tar.gz"
+      src: "/tmp/{{ maven_version.full }}.bin.tar.gz"
       dest: /opt/maven
       remote_src: yes
       keep_newer: yes
-      creates: "/opt/maven/{{ maven_version }}"
+      creates: "/opt/maven/{{ maven_version.full }}"
 
   - name: add maven bin dir to system-wide $PATH.
     copy:
       dest: /etc/profile.d/maven-path.sh
-      content: 'PATH=$PATH:/opt/maven/{{ maven_version }}/bin'
+      content: 'PATH=$PATH:/opt/maven/{{ maven_version.full }}/bin'
 
   - name: alternatives link for maven
     alternatives:
       name: mvn
       link: /usr/bin/mvn
-      path: /opt/maven/{{ maven_version }}/bin/mvn
+      path: /opt/maven/{{ maven_version.full }}/bin/mvn
