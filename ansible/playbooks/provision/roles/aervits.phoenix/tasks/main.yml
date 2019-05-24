@@ -1,9 +1,9 @@
 ---
 # tasks file for aervits.phoenix
-  - name: download phoenix {{ phoenix_version }} release
+  - name: download  {{ phoenix_version.full }}{{ phoenix_version.rc }} release
     get_url:
       url: "{{ phoenix_url }}"
-      dest: "/tmp/{{ phoenix_version }}.bin.tar.gz"
+      dest: "/tmp/{{ phoenix_version.full }}{{ phoenix_version.rc }}.bin.tar.gz"
       checksum: "sha512:{{ phoenix_sha512_sum }}"
 
   - name: create phoenix directory
@@ -16,7 +16,7 @@
 
   - name: extract phoenix release
     unarchive:
-      src: "/tmp/{{ phoenix_version }}.bin.tar.gz"
+      src: "/tmp/{{ phoenix_version.full }}{{ phoenix_version.rc }}.bin.tar.gz"
       dest: /opt/phoenix
       remote_src: yes
       keep_newer: yes
@@ -59,3 +59,12 @@
                </property>
       insertbefore: "</configuration>"
       backup: yes
+
+  - name: change phoenix directory permissions
+    file:
+      path: "/opt/phoenix/{{ phoenix_version.string }}-bin"
+      state: directory
+      owner: hbase
+      group: hbase
+      mode: 0775
+      recurse: yes
