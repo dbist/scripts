@@ -2,15 +2,15 @@
 # defaults file for aervits.hbase
 
 "hbase_version": {
-    "full": "hbase-2.1.3",
+    "full": "hbase-2.1.5",
     "major": 2,
     "minor": 1,
-    "revision": 3,
-    "version_string": "2.1.3",
-    "rc": ""
+    "revision": 5,
+    "version_string": "2.1.5",
+    "rc": "RC1"
 }
 
-hbase_url: "http://www-us.apache.org/dist/hbase/{{ hbase_version.version_string }}/{{ hbase_version.full }}-bin.tar.gz"
-hbase_sha_sum: F8CB92DC E771E198 FD1EADA7 D036896D 7D46CDA5 D896E06E
-                        62321112 E9CC1219 E87FBE2A E20C76CD E60675C2 FEFC729B
-                        0F6E4A84 792F7D6B 8E06EFC4 7DFB851B
+hbase_url: "http://dist.apache.org/repos/dist/dev/hbase/{{ hbase_version.version_string }}{{ hbase_version.rc }}/{{ hbase_version.full }}-bin.tar.gz"
+hbase_sha_sum: A63BB921 4F5034DC ED0F2466 E9B6240C 37BD88C5 9E67813E
+                        845D61DD 720797EE 28B8E642 485DB70C 5EF0DB82 4C7BCCA2
+                        D1BD2875 7B49BFF7 B7A02F7C 3539491A
