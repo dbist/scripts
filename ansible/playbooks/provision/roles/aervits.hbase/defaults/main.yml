@@ -7,10 +7,10 @@
     "minor": 1,
     "revision": 5,
     "version_string": "2.1.5",
-    "rc": "RC1"
+    "rc": ""
 }
 
-hbase_url: "http://dist.apache.org/repos/dist/dev/hbase/{{ hbase_version.version_string }}{{ hbase_version.rc }}/{{ hbase_version.full }}-bin.tar.gz"
+hbase_url: "http://www-us.apache.org/dist/hbase/{{ hbase_version.version_string }}{{ hbase_version.rc }}/{{ hbase_version.full }}-bin.tar.gz"
 hbase_sha_sum: A63BB921 4F5034DC ED0F2466 E9B6240C 37BD88C5 9E67813E
                         845D61DD 720797EE 28B8E642 485DB70C 5EF0DB82 4C7BCCA2
                         D1BD2875 7B49BFF7 B7A02F7C 3539491A
