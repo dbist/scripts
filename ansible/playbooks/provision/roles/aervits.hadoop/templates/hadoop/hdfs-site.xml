@@ -78,6 +78,11 @@
     </property>
 
     <property>
+      <name>dfs.datanode.data.dir</name>
+      <value>file:///dev/hadoop/hdfs/datanode/dfs/data</value>
+    </property>
+
+    <property>
       <name>dfs.datanode.data.dir.perm</name>
       <value>750</value>
     </property>
