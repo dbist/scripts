@@ -79,7 +79,7 @@
 
     <property>
       <name>dfs.datanode.data.dir</name>
-      <value>file:///dev/hadoop/hdfs/datanode/dfs/data</value>
+      <value>file://dev/hadoop/hdfs/datanode/dfs/data</value>
     </property>
 
     <property>
