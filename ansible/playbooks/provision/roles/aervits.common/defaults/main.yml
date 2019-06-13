@@ -1,7 +1,7 @@
 ---
 # defaults file for aervits.common
 
-pam_limits_nofile: 50000
-pam_limits_nproc: 10000
+pam_limits_nofile: "50000"
+pam_limits_nproc: "10000"
 net_ipv4_ip_local_port_range: 10000 65000
 vm_swapiness: 0

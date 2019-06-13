@@ -1,6 +1,6 @@
 ---
 # tasks file for aervits.hadoop
-  - name: download hadoop {{ hadoop_version }} release
+  - name: download {{ hadoop_version }} release
     get_url:
       url: "{{ hadoop_url }}"
       dest: "/tmp/{{ hadoop_version }}.tar.gz"
