@@ -5,16 +5,14 @@
 
   - name: update host name
     hostname:
-      name: "{{ ansible_nodename }}"
+      name: "hadoop.example.com"
 
-  - name: update localhost
-    lineinfile:
-      path: "{{ hostname_hosts_file_location }}"
-      regexp: '^127\.0\.0\.1'
-      line: "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4{{'\n'}}{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}{{ '   ' }}{{ ansible_fqdn }}{{ '   '}}{{ ansible_nodename }}"
-      state: present
-#      insertafter: EOF
-      backup: yes
-      owner: root
-      group: root
-      mode: 0644
+#  - name: configure hostname and domain name
+#    net_system:
+#      hostname: hadoop
+#      domain_name: example.com
+
+  - name: configure {{ hostname_hosts_file_location }}
+    template:
+      src: templates/hosts
+      dest: "{{ hostname_hosts_file_location }}"
