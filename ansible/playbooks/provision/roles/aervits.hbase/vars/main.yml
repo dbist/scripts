@@ -7,9 +7,9 @@
     "minor": 2,
     "revision": 0,
     "version_string": "2.2.0",
-    "rc": "RC5"
+    "rc": "RC6"
 }
 hbase_url: "http://dist.apache.org/repos/dist/dev/hbase/{{ hbase_version.version_string }}{{ hbase_version.rc }}/{{ hbase_version.full }}-bin.tar.gz"
-hbase_sha_sum: 36959800 33BA89FC E9090C33 662AC9DD 0326477F 7E23CF6E
-                        959DA539 ED15889A 95A3B8D5 059EC3F4 61DED9CB 8153FBAE
-                        61DF6D10 FFDB95A5 1FA34648 1D7E50C2
+hbase_sha_sum: 051EB40C ACD1DA2B 4ABA847C 974C6F36 5BDA23C2 F5584111
+                        9422C1F2 F4F0ABE9 F7766FCC 3B5515E8 41FCF6B7 4233B6A4
+                        1D6AE1C4 73CE3684 C59B48FC 3D974A2F
