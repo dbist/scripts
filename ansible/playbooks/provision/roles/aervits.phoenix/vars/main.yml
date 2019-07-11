@@ -1,13 +1,2 @@
 ---
-# defaults file for aervits.phoenix
-"phoenix_version": {
-    "full": "apache-phoenix-4.14.2-HBase-1.4",
-    "major": 4,
-    "minor": 14,
-    "revision": 2,
-    "string": "apache-phoenix-4.14.2-HBase-1.4",
-    "hbase_branch": "1.4",
-    "rc": "-rc2"
-}
-phoenix_url: "https://dist.apache.org/repos/dist/dev/phoenix/{{ phoenix_version.full }}{{ phoenix_version.rc }}/bin/{{ phoenix_version.string }}-bin.tar.gz"
-phoenix_sha512_sum: 76376905627dda58954204b7cd52e01c573c0e745c83d85f9281dd29a74205c30dc86a3ccec3092e39edcb271f264635d039f89c0f2b1f138eedd614d8c26382
+# vars file for aervits.phoenix
