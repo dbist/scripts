@@ -10,6 +10,5 @@
     "rc": ""
 }
 
-https://www-us.apache.org/dist/phoenix/apache-phoenix-4.14.2-HBase-1.4/bin/apache-phoenix-4.14.2-HBase-1.4-bin.tar.gz
 phoenix_url: "https://www-us.apache.org/dist/phoenix/{{ phoenix_version.full }}{{ phoenix_version.rc }}/bin/{{ phoenix_version.string }}-bin.tar.gz"
 phoenix_sha512_sum: 76376905627dda58954204b7cd52e01c573c0e745c83d85f9281dd29a74205c30dc86a3ccec3092e39edcb271f264635d039f89c0f2b1f138eedd614d8c26382
