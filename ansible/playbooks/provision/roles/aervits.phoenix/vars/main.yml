@@ -7,8 +7,8 @@
     "revision": 3,
     "string": "apache-phoenix-4.14.3-HBase-1.4",
     "hbase_branch": "1.4",
-    "rc": "-rc1"
+    "rc": "-rc2"
 }
 
 phoenix_url: "https://dist.apache.org/repos/dist/dev/phoenix/{{ phoenix_version.full }}{{ phoenix_version.rc }}/bin/{{ phoenix_version.string }}-bin.tar.gz"
-phoenix_sha512_sum: 14b223c2e2084a987f893f1e9a9cfc0430a804ef22f52d577185e0a1d13348ebc9dc7b3967db6531a437624bea8d41c376fb2669fd710c7b55128344a65f6b29
+phoenix_sha512_sum: bf6c40db7be1c2b160d911ff04cafcfc6b1b14cb7d4751d453fd2877ba0d93c8712ee54eb987e36dee6cdbff2476cc15594d93f45d27b60f7c43be518b07ef24
