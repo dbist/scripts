@@ -1,9 +1,9 @@
 ---
 # tasks file for aervits.spark---
-- name: download spark {{ spark_version }} release
+- name: download spark {{ spark_version.full }} release
   get_url:
     url: "{{ spark_url }}"
-    dest: "/tmp/{{ spark_version }}.tar.gz"
+    dest: "/tmp/{{ spark_version.full }}.tar.gz"
     checksum: "sha512:{{ spark_sha_sum }}"
 
 - name: create spark directory
@@ -16,20 +16,20 @@
 
 - name: extract spark release
   unarchive:
-    src: "/tmp/{{ spark_version }}.tar.gz"
+    src: "/tmp/{{ spark_version.full }}.tar.gz"
     dest: /opt/spark
     remote_src: yes
     keep_newer: yes
-    creates: "/opt/spark/{{ spark_version }}"
+    creates: "/opt/spark/{{ spark_version.full }}"
 
 - name: rename spark directory
-  command: mv /opt/spark/{{ spark_version }}-bin-{{ hadoop_version }} /opt/spark/{{ spark_version }}
+  command: mv /opt/spark/{{ spark_version.full }}-bin-{{ spark_version.hadoop_build }} /opt/spark/{{ spark_version.full }}
   args:
-    creates: "/opt/spark/{{ spark_version }}"
+    creates: "/opt/spark/{{ spark_version.full }}"
 
 - name: export SPARK_HOME
   lineinfile:
     path: /etc/environment
-    line: export SPARK_HOME="/opt/spark/{{ spark_version }}"
+    line: export SPARK_HOME="/opt/spark/{{ spark_version.full }}"
     state: present
     create: yes
