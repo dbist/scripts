@@ -3,6 +3,8 @@
 1. VirtualBox
 2. Vagrant
 3. Ansible
+   Required plugins:
+     1. `vagrant-vbguest` install using `vagrant plugin install vagrant-vbguest`
 
 #### Download and add centos/7 box, support for other OS can be added later
 ```
@@ -35,6 +37,5 @@ aervits-hdp0.field.hortonworks.com
 ```
 
 #### TODO
-1. add REST call to add user-post-creation-hook
-2. add REST call to add user to ambari
-
+1. upgrade Hadoop to 2.9.2 at minimum
+2. upgrade Spark to 2.3.4 or 2.4.4
