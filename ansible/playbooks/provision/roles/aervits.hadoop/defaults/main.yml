@@ -1,6 +1,15 @@
 ---
 # defaults file for aervits.hadoop
-  hadoop_version: hadoop-2.8.5
-  hadoop_url: http://www-us.apache.org/dist/hadoop/common/{{ hadoop_version }}/{{ hadoop_version }}.tar.gz
-  hadoop_sha_sum: 4174E7A6 7B614B7D 5E47A1A2 420CBE9A 57978908 F8AD0405 F1D17730 6FB36ED8
-         7C895810 F70E3C6A 6CBADC76 AFB9303F 1C49CBCA 67237E18 C799D30F 87AFA57C 
+"hadoop_version": {
+    "full": "hadoop-2.10.0",
+    "major": 2,
+    "minor": 10,
+    "revision": 0,
+    "version_string": "2.10.0",
+    "rc": ""
+}
+
+hadoop_url: "https://www-us.apache.org/dist/hadoop/common/{{ hadoop_version.full}}/{{ hadoop_version.full }}.tar.gz"
+hadoop_sha_sum: 76592EFE 09CD9887 ADB9E058 C43D2885 8B19BCBC 829EA1DE
+                      3D7F7D2E 54E4B37F 415984DC AC5F401D EB9C30E6 9E85B7F3
+                      AC29785A C6EB17CD 15B7664C 731BCD85
