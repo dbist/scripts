@@ -1,9 +1,9 @@
 ---
 # tasks file for aervits.hadoop
-  - name: download {{ hadoop_version }} release
+  - name: download {{ hadoop_version.full }} release
     get_url:
       url: "{{ hadoop_url }}"
-      dest: "/tmp/{{ hadoop_version }}.tar.gz"
+      dest: "/tmp/{{ hadoop_version.full }}.tar.gz"
       checksum: "sha512:{{ hadoop_sha_sum }}"
 
   - name: create hadoop directory
@@ -16,7 +16,7 @@
 
   - name: extract hadoop release
     unarchive:
-      src: "/tmp/{{ hadoop_version }}.tar.gz"
+      src: "/tmp/{{ hadoop_version.full }}.tar.gz"
       dest: /opt/hadoop
       remote_src: yes
       keep_newer: yes
@@ -57,31 +57,31 @@
   - name: configure core-site.xml
     template:
       src: templates/hadoop/core-site.xml
-      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/core-site.xml"
+      dest: "/opt/hadoop/{{ hadoop_version.full }}/etc/hadoop/core-site.xml"
 
   - name: configure hdfs-site.xml
     template:
       src: templates/hadoop/hdfs-site.xml
-      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/hdfs-site.xml"
+      dest: "/opt/hadoop/{{ hadoop_version.full }}/etc/hadoop/hdfs-site.xml"
 
   - name: configure mapred-site.xml
     template:
       src: templates/hadoop/mapred-site.xml
-      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/mapred-site.xml"
+      dest: "/opt/hadoop/{{ hadoop_version.full }}/etc/hadoop/mapred-site.xml"
 
   - name: configure yarn-site.xml
     template:
       src: templates/hadoop/yarn-site.xml
-      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/yarn-site.xml"
+      dest: "/opt/hadoop/{{ hadoop_version.full }}/etc/hadoop/yarn-site.xml"
 
   - name: configure capacity-scheduler.xml
     template:
       src: templates/hadoop/capacity-scheduler.xml
-      dest: "/opt/hadoop/{{ hadoop_version }}/etc/hadoop/capacity-scheduler.xml"
+      dest: "/opt/hadoop/{{ hadoop_version.full }}/etc/hadoop/capacity-scheduler.xml"
 
   - name: change hadoop directory permissions
     file:
-      path: "/opt/hadoop/{{ hadoop_version }}"
+      path: "/opt/hadoop/{{ hadoop_version.full }}"
       state: directory
       owner: hadoop
       group: hadoop
@@ -91,14 +91,14 @@
   - name: export HADOOP_HOME
     lineinfile:
       path: /etc/environment
-      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version }}"
+      line: export HADOOP_HOME="/opt/hadoop/{{ hadoop_version.full }}"
       state: present
       create: yes
 
   - name: export HADOOP_CONF_DIR
     lineinfile:
       path: /etc/environment
-      line: export HADOOP_CONF_DIR="/opt/hadoop/{{ hadoop_version }}/etc/hadoop"
+      line: export HADOOP_CONF_DIR="/opt/hadoop/{{ hadoop_version.full }}/etc/hadoop"
       state: present
       create: yes
 
@@ -143,7 +143,7 @@
 
   - name: start namenode, datanode, secondarynamenode
     expect:
-      command: /opt/hadoop/{{ hadoop_version }}/sbin/start-dfs.sh
+      command: /opt/hadoop/{{ hadoop_version.full }}/sbin/start-dfs.sh
       responses:
           'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
     become: true
@@ -151,7 +151,7 @@
 
   - name: start resourcemanager, nodemanager
     expect:
-      command: /opt/hadoop/{{ hadoop_version }}/sbin/start-yarn.sh
+      command: /opt/hadoop/{{ hadoop_version.full }}/sbin/start-yarn.sh
       responses:
           'Are you sure you want to continue connecting \(yes/no\)?': 'yes'
     become: true
