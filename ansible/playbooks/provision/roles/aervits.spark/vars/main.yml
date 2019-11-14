@@ -1,2 +1,17 @@
 ---
 # vars file for aervits.spark---
+"spark_version": {
+    "full": "spark-2.4.4",
+    "major": 2,
+    "minor": 4,
+    "revision": 4,
+    "version_string": "2.4.4",
+    "hadoop_build": "hadoop2.7",
+    "rc": ""
+}
+
+spark_url: "https://www-us.apache.org/dist/spark/{{ spark_version.full }}/{{ spark_version.full }}-bin-{{ spark_version.hadoop_build }}.tgz" 
+spark_sha_sum: 2E3A5C85 3B9F28C7 D4525C0A DCB0D971 B73AD47D
+                               5CCE138C 85335B9F 53A65195 40D3923C B0B5CEE4
+                               1E386E49 AE8A409A 51AB7194 BA11A254 E037A848
+                               D0C4A9E5
