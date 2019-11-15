@@ -5,6 +5,7 @@
 3. Ansible
    Required plugins:
      1. `vagrant-vbguest` install using `vagrant plugin install vagrant-vbguest`
+     2. `vagrant-hostmanager` install using `vagrant plugin install vagrant-hostmanager`
 
 #### Download and add centos/7 box, support for other OS can be added later
 ```
