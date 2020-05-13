@@ -1,3 +1,5 @@
+DEPRECATED IN FAVOR OF: https://github.com/dbist/ansible-roles/roles/aervits.devtools
+
 Role Name
 =========
 
