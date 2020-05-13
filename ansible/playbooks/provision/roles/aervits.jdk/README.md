@@ -1,3 +1,5 @@
+DEPRECATED: USE https://github.com/dbist/ansible-roles/tree/master/roles/aervits.jdk instead
+
 Role Name
 =========
 
