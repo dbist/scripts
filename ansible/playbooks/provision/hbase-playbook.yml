@@ -8,8 +8,8 @@
     - aervits.common
     - aervits.hadoop
     - aervits.hbase
-    - aervits.spark
-    - aervits.devtools
+#    - aervits.spark
+#    - aervits.devtools
   remote_user: vagrant
   become: true
   vars:
